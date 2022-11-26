@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
+import MainNavKeyListener from "./components/MainNavKeyListener.vue";
 </script>
 
 <template>
@@ -17,6 +18,7 @@ import HelloWorld from "./components/HelloWorld.vue";
       <HelloWorld msg="You did it!" />
 
       <nav>
+        <MainNavKeyListener/>
         <RouterLink to="/workerslist">Setup Worker List</RouterLink>
         <RouterLink to="/promptslist">Setup Prompts List</RouterLink>
         <RouterLink to="/startshift">Start Shift</RouterLink>
