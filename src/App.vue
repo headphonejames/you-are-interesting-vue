@@ -6,9 +6,9 @@ import HelloWorld from "./components/HelloWorld.vue";
 <template>
   <header>
     <img
-      alt="Vue logo"
+      alt="You are interesting logo"
       class="logo"
-      src="@/assets/logo.svg"
+      src="@/assets/img/YAI-logo-color-sm.png"
       width="125"
       height="125"
     />
@@ -17,8 +17,9 @@ import HelloWorld from "./components/HelloWorld.vue";
       <HelloWorld msg="You did it!" />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/workerslist">Setup Worker List</RouterLink>
+        <RouterLink to="/promptslist">Setup Prompts List</RouterLink>
+        <RouterLink to="/startshift">Start Shift</RouterLink>
       </nav>
     </div>
   </header>
@@ -34,12 +35,12 @@ header {
 
 .logo {
   display: block;
-  margin: 0 auto 2rem;
+  margin: 0 auto 1rem;
 }
 
 nav {
   width: 100%;
-  font-size: 12px;
+  font-size: 30px;
   text-align: center;
   margin-top: 2rem;
 }
