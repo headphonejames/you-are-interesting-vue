@@ -2,11 +2,6 @@
 import router from "../router";
 
 export default {
-  data() {
-    return {
-      count: 0
-    }
-  },
   created() {
     window.addEventListener('keydown', this.handleKeyDown);
   },
@@ -14,14 +9,16 @@ export default {
     window.removeEventListener('keydown', this.handleKeyDown);
   },
   methods: {
-    increment() {
-      // update component state
-      this.count++
-    },
     handleKeyDown(event) {
       console.log(event);
-      if (event.code === "Digit0") {
+      if (event.code === "Digit1") {
+        router.push({ path: '/workerslist' })
+      }
+      if (event.code === "Digit2") {
         router.push({ path: '/promptslist' })
+      }
+      if (event.code === "Digit3") {
+        router.push({ path: '/startshift' })
       }
     }
   }
@@ -29,6 +26,4 @@ export default {
 </script>
 
 <template>
-  <!-- make this button work -->
-  <button @click="increment">{{ count }}</button>
 </template>

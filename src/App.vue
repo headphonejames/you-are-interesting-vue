@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
-import MainNavKeyListener from "./components/MainNavKeyListener.vue";
+import MainNavKeyListener from "./components/KeyListener.vue";
 </script>
 
 <template>
