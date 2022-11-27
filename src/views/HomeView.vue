@@ -14,10 +14,7 @@ import router from "../router";
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
       <nav>
-        <KeyListener/>
         <ui-button raised @click="$router.push('workerslist')">Workers List</ui-button>
         <ui-button raised @click="$router.push('promptslist')">Prompts List</ui-button>
         <ui-button raised @click="$router.push('startshift')">Start Shift</ui-button>

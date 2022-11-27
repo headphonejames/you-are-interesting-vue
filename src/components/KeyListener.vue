@@ -10,7 +10,6 @@ export default {
   },
   methods: {
     handleKeyDown(event) {
-      console.log(event);
       if (event.code === "Digit1") {
         router.push({ path: '/workerslist' })
       }
