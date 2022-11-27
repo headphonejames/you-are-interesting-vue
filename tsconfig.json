@@ -6,7 +6,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "balm-ui-plus": ["node_modules/balm-ui/dist/balm-ui-plus.d.ts"]
     }
   },
 
