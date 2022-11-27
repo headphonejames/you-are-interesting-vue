@@ -1,9 +1,17 @@
-<script setup lang="ts">
-import Workers from "../components/Workers.vue";
+<script lang="ts">
+import router from "../router";
+export default {
+  methods: {
+    mainpage() {
+      router.push({ path: '/' })
+    }
+  }
+}
 </script>
 
 <template>
   <main>
-    <Workers />
+    Workers
+    <ui-button raised @click="mainpage">Back Home</ui-button>
   </main>
 </template>
