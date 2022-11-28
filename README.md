@@ -1,46 +1,41 @@
-# you-are-interesting-vue
+![You are interesting](img/YAI-logo-color-sm.png)
 
-This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
+## Companion app for the [you are interesting](https://www.youareinteresting.org) project.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Type Support for `.vue` Imports in TS
+The [you are interesting](https://www.youareinteresting.org) project is an experiment in fun and connection. The idea is to create a context for brief, fun conversations with strangers.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+This app isn't required to execute on this idea, but if you wanted track metrics of the connections being made, this is the app to do it.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+#### It tracks:
+* Who is staffing the project at any given time
+* What prompts are being offered at the moment
+* How many people the staff are connecting with
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+#### Tracking per conversation:
+* The prompt chosen for the conversation
+* The length and quality of that connection
+* Notes you might want to take about the conversation for later reference
 
-## Customize configuration
+A 3 minute [video tutorial](https://youtu.be/Pf7Mph9q2bw)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+[![YAI Video Thumbnail](img/you-are-interesting-thumbnail.jpg)](https://youtu.be/Pf7Mph9q2bw)
 
-## Project Setup
 
-```sh
-npm install
-```
+The app is built in [Streamlit](https://streamlit.io/). It uses google sheets for the persistence layer for this project. Google sheets allows easy access to the data as well opening up ways that the data can by analyized and visualized.
 
-### Compile and Hot-Reload for Development
+#### The setup
 
-```sh
-npm run dev
-```
+[Connect Streamlit to a private Google Sheet](https://docs.streamlit.io/knowledge-base/tutorials/databases/private-gsheet)
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-npm run build
-```
+### Demo the app
 
-### Lint with [ESLint](https://eslint.org/)
+https://you-are-interesting.streamlitapp.com/
 
-```sh
-npm run lint
-```
+### The spreadsheet that is being used in the demo app
+
+https://docs.google.com/spreadsheets/d/1GkS2_BsD_nDcM_lBP_OaAaXlpLbOhP_oXmn4cQNHt_4/edit?usp=sharing
+
+This project is supported by [G-Research OSS](https://opensource.gresearch.co.uk/)

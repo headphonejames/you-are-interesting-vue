@@ -2,109 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getStaff = /* GraphQL */ `
-  query GetStaff($id: ID!) {
-    getStaff(id: $id) {
-      id
-      name
-      workers {
-        items {
-          id
-          name
-          logIndex
-          timeSheetIndex
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          staffWorkersId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listStaff = /* GraphQL */ `
-  query ListStaff(
-    $filter: ModelStaffFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listStaff(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncStaff = /* GraphQL */ `
-  query SyncStaff(
-    $filter: ModelStaffFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncStaff(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
 export const getWorker = /* GraphQL */ `
   query GetWorker($id: ID!) {
     getWorker(id: $id) {
       id
       name
-      staff {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       timesheet {
         id
         startTime
@@ -137,7 +39,6 @@ export const getWorker = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      staffWorkersId
     }
   }
 `;
@@ -151,15 +52,6 @@ export const listWorkers = /* GraphQL */ `
       items {
         id
         name
-        staff {
-          id
-          name
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
         timesheet {
           id
           startTime
@@ -192,7 +84,6 @@ export const listWorkers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        staffWorkersId
       }
       nextToken
       startedAt
@@ -215,15 +106,6 @@ export const syncWorkers = /* GraphQL */ `
       items {
         id
         name
-        staff {
-          id
-          name
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
         timesheet {
           id
           startTime
@@ -256,7 +138,6 @@ export const syncWorkers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        staffWorkersId
       }
       nextToken
       startedAt

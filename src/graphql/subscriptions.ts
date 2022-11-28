@@ -2,111 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateStaff = /* GraphQL */ `
-  subscription OnCreateStaff($filter: ModelSubscriptionStaffFilterInput) {
-    onCreateStaff(filter: $filter) {
-      id
-      name
-      workers {
-        items {
-          id
-          name
-          logIndex
-          timeSheetIndex
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          staffWorkersId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateStaff = /* GraphQL */ `
-  subscription OnUpdateStaff($filter: ModelSubscriptionStaffFilterInput) {
-    onUpdateStaff(filter: $filter) {
-      id
-      name
-      workers {
-        items {
-          id
-          name
-          logIndex
-          timeSheetIndex
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          staffWorkersId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteStaff = /* GraphQL */ `
-  subscription OnDeleteStaff($filter: ModelSubscriptionStaffFilterInput) {
-    onDeleteStaff(filter: $filter) {
-      id
-      name
-      workers {
-        items {
-          id
-          name
-          logIndex
-          timeSheetIndex
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          staffWorkersId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const onCreateWorker = /* GraphQL */ `
   subscription OnCreateWorker($filter: ModelSubscriptionWorkerFilterInput) {
     onCreateWorker(filter: $filter) {
       id
       name
-      staff {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       timesheet {
         id
         startTime
@@ -139,7 +39,6 @@ export const onCreateWorker = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      staffWorkersId
     }
   }
 `;
@@ -148,19 +47,6 @@ export const onUpdateWorker = /* GraphQL */ `
     onUpdateWorker(filter: $filter) {
       id
       name
-      staff {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       timesheet {
         id
         startTime
@@ -193,7 +79,6 @@ export const onUpdateWorker = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      staffWorkersId
     }
   }
 `;
@@ -202,19 +87,6 @@ export const onDeleteWorker = /* GraphQL */ `
     onDeleteWorker(filter: $filter) {
       id
       name
-      staff {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       timesheet {
         id
         startTime
@@ -247,7 +119,6 @@ export const onDeleteWorker = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      staffWorkersId
     }
   }
 `;

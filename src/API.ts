@@ -2,17 +2,21 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateStaffInput = {
+export type CreateWorkerInput = {
   id?: string | null,
   name: string,
+  logIndex?: number | null,
+  timeSheetIndex?: number | null,
   _version?: number | null,
 };
 
-export type ModelStaffConditionInput = {
+export type ModelWorkerConditionInput = {
   name?: ModelStringInput | null,
-  and?: Array< ModelStaffConditionInput | null > | null,
-  or?: Array< ModelStaffConditionInput | null > | null,
-  not?: ModelStaffConditionInput | null,
+  logIndex?: ModelIntInput | null,
+  timeSheetIndex?: ModelIntInput | null,
+  and?: Array< ModelWorkerConditionInput | null > | null,
+  or?: Array< ModelWorkerConditionInput | null > | null,
+  not?: ModelWorkerConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -55,30 +59,22 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Staff = {
-  __typename: "Staff",
-  id: string,
-  name: string,
-  workers?: ModelWorkerConnection | null,
-  createdAt: string,
-  updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-};
-
-export type ModelWorkerConnection = {
-  __typename: "ModelWorkerConnection",
-  items:  Array<Worker | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type Worker = {
   __typename: "Worker",
   id: string,
   name: string,
-  staff?: Staff | null,
   timesheet?:  Array<Timesheet | null > | null,
   connectionLog?:  Array<ConnectionLog | null > | null,
   logIndex?: number | null,
@@ -88,7 +84,6 @@ export type Worker = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  staffWorkersId?: string | null,
 };
 
 export type Timesheet = {
@@ -120,71 +115,12 @@ export type ConnectionLog = {
   _lastChangedAt: number,
 };
 
-export type UpdateStaffInput = {
-  id: string,
-  name?: string | null,
-  _version?: number | null,
-};
-
-export type DeleteStaffInput = {
-  id: string,
-  _version?: number | null,
-};
-
-export type CreateWorkerInput = {
-  id?: string | null,
-  name: string,
-  logIndex?: number | null,
-  timeSheetIndex?: number | null,
-  _version?: number | null,
-  staffWorkersId?: string | null,
-};
-
-export type ModelWorkerConditionInput = {
-  name?: ModelStringInput | null,
-  logIndex?: ModelIntInput | null,
-  timeSheetIndex?: ModelIntInput | null,
-  and?: Array< ModelWorkerConditionInput | null > | null,
-  or?: Array< ModelWorkerConditionInput | null > | null,
-  not?: ModelWorkerConditionInput | null,
-  staffWorkersId?: ModelIDInput | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type UpdateWorkerInput = {
   id: string,
   name?: string | null,
   logIndex?: number | null,
   timeSheetIndex?: number | null,
   _version?: number | null,
-  staffWorkersId?: string | null,
 };
 
 export type DeleteWorkerInput = {
@@ -261,21 +197,6 @@ export type DeleteConnectionLogInput = {
   _version?: number | null,
 };
 
-export type ModelStaffFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  and?: Array< ModelStaffFilterInput | null > | null,
-  or?: Array< ModelStaffFilterInput | null > | null,
-  not?: ModelStaffFilterInput | null,
-};
-
-export type ModelStaffConnection = {
-  __typename: "ModelStaffConnection",
-  items:  Array<Staff | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
-};
-
 export type ModelWorkerFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -284,7 +205,29 @@ export type ModelWorkerFilterInput = {
   and?: Array< ModelWorkerFilterInput | null > | null,
   or?: Array< ModelWorkerFilterInput | null > | null,
   not?: ModelWorkerFilterInput | null,
-  staffWorkersId?: ModelIDInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type ModelWorkerConnection = {
+  __typename: "ModelWorkerConnection",
+  items:  Array<Worker | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
 };
 
 export type ModelTimesheetFilterInput = {
@@ -324,11 +267,13 @@ export type ModelConnectionLogConnection = {
   startedAt?: number | null,
 };
 
-export type ModelSubscriptionStaffFilterInput = {
+export type ModelSubscriptionWorkerFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionStaffFilterInput | null > | null,
-  or?: Array< ModelSubscriptionStaffFilterInput | null > | null,
+  logIndex?: ModelSubscriptionIntInput | null,
+  timeSheetIndex?: ModelSubscriptionIntInput | null,
+  and?: Array< ModelSubscriptionWorkerFilterInput | null > | null,
+  or?: Array< ModelSubscriptionWorkerFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -359,15 +304,6 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
-};
-
-export type ModelSubscriptionWorkerFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  logIndex?: ModelSubscriptionIntInput | null,
-  timeSheetIndex?: ModelSubscriptionIntInput | null,
-  and?: Array< ModelSubscriptionWorkerFilterInput | null > | null,
-  or?: Array< ModelSubscriptionWorkerFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIntInput = {
@@ -403,114 +339,6 @@ export type ModelSubscriptionConnectionLogFilterInput = {
   or?: Array< ModelSubscriptionConnectionLogFilterInput | null > | null,
 };
 
-export type CreateStaffMutationVariables = {
-  input: CreateStaffInput,
-  condition?: ModelStaffConditionInput | null,
-};
-
-export type CreateStaffMutation = {
-  createStaff?:  {
-    __typename: "Staff",
-    id: string,
-    name: string,
-    workers?:  {
-      __typename: "ModelWorkerConnection",
-      items:  Array< {
-        __typename: "Worker",
-        id: string,
-        name: string,
-        logIndex?: number | null,
-        timeSheetIndex?: number | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        staffWorkersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type UpdateStaffMutationVariables = {
-  input: UpdateStaffInput,
-  condition?: ModelStaffConditionInput | null,
-};
-
-export type UpdateStaffMutation = {
-  updateStaff?:  {
-    __typename: "Staff",
-    id: string,
-    name: string,
-    workers?:  {
-      __typename: "ModelWorkerConnection",
-      items:  Array< {
-        __typename: "Worker",
-        id: string,
-        name: string,
-        logIndex?: number | null,
-        timeSheetIndex?: number | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        staffWorkersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type DeleteStaffMutationVariables = {
-  input: DeleteStaffInput,
-  condition?: ModelStaffConditionInput | null,
-};
-
-export type DeleteStaffMutation = {
-  deleteStaff?:  {
-    __typename: "Staff",
-    id: string,
-    name: string,
-    workers?:  {
-      __typename: "ModelWorkerConnection",
-      items:  Array< {
-        __typename: "Worker",
-        id: string,
-        name: string,
-        logIndex?: number | null,
-        timeSheetIndex?: number | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        staffWorkersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
 export type CreateWorkerMutationVariables = {
   input: CreateWorkerInput,
   condition?: ModelWorkerConditionInput | null,
@@ -521,21 +349,6 @@ export type CreateWorkerMutation = {
     __typename: "Worker",
     id: string,
     name: string,
-    staff?:  {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
     timesheet?:  Array< {
       __typename: "Timesheet",
       id: string,
@@ -570,7 +383,6 @@ export type CreateWorkerMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    staffWorkersId?: string | null,
   } | null,
 };
 
@@ -584,21 +396,6 @@ export type UpdateWorkerMutation = {
     __typename: "Worker",
     id: string,
     name: string,
-    staff?:  {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
     timesheet?:  Array< {
       __typename: "Timesheet",
       id: string,
@@ -633,7 +430,6 @@ export type UpdateWorkerMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    staffWorkersId?: string | null,
   } | null,
 };
 
@@ -647,21 +443,6 @@ export type DeleteWorkerMutation = {
     __typename: "Worker",
     id: string,
     name: string,
-    staff?:  {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
     timesheet?:  Array< {
       __typename: "Timesheet",
       id: string,
@@ -696,7 +477,6 @@ export type DeleteWorkerMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    staffWorkersId?: string | null,
   } | null,
 };
 
@@ -829,100 +609,6 @@ export type DeleteConnectionLogMutation = {
   } | null,
 };
 
-export type GetStaffQueryVariables = {
-  id: string,
-};
-
-export type GetStaffQuery = {
-  getStaff?:  {
-    __typename: "Staff",
-    id: string,
-    name: string,
-    workers?:  {
-      __typename: "ModelWorkerConnection",
-      items:  Array< {
-        __typename: "Worker",
-        id: string,
-        name: string,
-        logIndex?: number | null,
-        timeSheetIndex?: number | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        staffWorkersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type ListStaffQueryVariables = {
-  filter?: ModelStaffFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListStaffQuery = {
-  listStaff?:  {
-    __typename: "ModelStaffConnection",
-    items:  Array< {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncStaffQueryVariables = {
-  filter?: ModelStaffFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncStaffQuery = {
-  syncStaff?:  {
-    __typename: "ModelStaffConnection",
-    items:  Array< {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
 export type GetWorkerQueryVariables = {
   id: string,
 };
@@ -932,21 +618,6 @@ export type GetWorkerQuery = {
     __typename: "Worker",
     id: string,
     name: string,
-    staff?:  {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
     timesheet?:  Array< {
       __typename: "Timesheet",
       id: string,
@@ -981,7 +652,6 @@ export type GetWorkerQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    staffWorkersId?: string | null,
   } | null,
 };
 
@@ -998,16 +668,6 @@ export type ListWorkersQuery = {
       __typename: "Worker",
       id: string,
       name: string,
-      staff?:  {
-        __typename: "Staff",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null,
       timesheet?:  Array< {
         __typename: "Timesheet",
         id: string,
@@ -1042,7 +702,6 @@ export type ListWorkersQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      staffWorkersId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1063,16 +722,6 @@ export type SyncWorkersQuery = {
       __typename: "Worker",
       id: string,
       name: string,
-      staff?:  {
-        __typename: "Staff",
-        id: string,
-        name: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null,
       timesheet?:  Array< {
         __typename: "Timesheet",
         id: string,
@@ -1107,7 +756,6 @@ export type SyncWorkersQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      staffWorkersId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1267,111 +915,6 @@ export type SyncConnectionLogsQuery = {
   } | null,
 };
 
-export type OnCreateStaffSubscriptionVariables = {
-  filter?: ModelSubscriptionStaffFilterInput | null,
-};
-
-export type OnCreateStaffSubscription = {
-  onCreateStaff?:  {
-    __typename: "Staff",
-    id: string,
-    name: string,
-    workers?:  {
-      __typename: "ModelWorkerConnection",
-      items:  Array< {
-        __typename: "Worker",
-        id: string,
-        name: string,
-        logIndex?: number | null,
-        timeSheetIndex?: number | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        staffWorkersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type OnUpdateStaffSubscriptionVariables = {
-  filter?: ModelSubscriptionStaffFilterInput | null,
-};
-
-export type OnUpdateStaffSubscription = {
-  onUpdateStaff?:  {
-    __typename: "Staff",
-    id: string,
-    name: string,
-    workers?:  {
-      __typename: "ModelWorkerConnection",
-      items:  Array< {
-        __typename: "Worker",
-        id: string,
-        name: string,
-        logIndex?: number | null,
-        timeSheetIndex?: number | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        staffWorkersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type OnDeleteStaffSubscriptionVariables = {
-  filter?: ModelSubscriptionStaffFilterInput | null,
-};
-
-export type OnDeleteStaffSubscription = {
-  onDeleteStaff?:  {
-    __typename: "Staff",
-    id: string,
-    name: string,
-    workers?:  {
-      __typename: "ModelWorkerConnection",
-      items:  Array< {
-        __typename: "Worker",
-        id: string,
-        name: string,
-        logIndex?: number | null,
-        timeSheetIndex?: number | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        staffWorkersId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
 export type OnCreateWorkerSubscriptionVariables = {
   filter?: ModelSubscriptionWorkerFilterInput | null,
 };
@@ -1381,21 +924,6 @@ export type OnCreateWorkerSubscription = {
     __typename: "Worker",
     id: string,
     name: string,
-    staff?:  {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
     timesheet?:  Array< {
       __typename: "Timesheet",
       id: string,
@@ -1430,7 +958,6 @@ export type OnCreateWorkerSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    staffWorkersId?: string | null,
   } | null,
 };
 
@@ -1443,21 +970,6 @@ export type OnUpdateWorkerSubscription = {
     __typename: "Worker",
     id: string,
     name: string,
-    staff?:  {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
     timesheet?:  Array< {
       __typename: "Timesheet",
       id: string,
@@ -1492,7 +1004,6 @@ export type OnUpdateWorkerSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    staffWorkersId?: string | null,
   } | null,
 };
 
@@ -1505,21 +1016,6 @@ export type OnDeleteWorkerSubscription = {
     __typename: "Worker",
     id: string,
     name: string,
-    staff?:  {
-      __typename: "Staff",
-      id: string,
-      name: string,
-      workers?:  {
-        __typename: "ModelWorkerConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
     timesheet?:  Array< {
       __typename: "Timesheet",
       id: string,
@@ -1554,7 +1050,6 @@ export type OnDeleteWorkerSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    staffWorkersId?: string | null,
   } | null,
 };
 

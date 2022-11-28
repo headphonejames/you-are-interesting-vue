@@ -2,102 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createStaff = /* GraphQL */ `
-  mutation CreateStaff(
-    $input: CreateStaffInput!
-    $condition: ModelStaffConditionInput
-  ) {
-    createStaff(input: $input, condition: $condition) {
-      id
-      name
-      workers {
-        items {
-          id
-          name
-          logIndex
-          timeSheetIndex
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          staffWorkersId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateStaff = /* GraphQL */ `
-  mutation UpdateStaff(
-    $input: UpdateStaffInput!
-    $condition: ModelStaffConditionInput
-  ) {
-    updateStaff(input: $input, condition: $condition) {
-      id
-      name
-      workers {
-        items {
-          id
-          name
-          logIndex
-          timeSheetIndex
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          staffWorkersId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteStaff = /* GraphQL */ `
-  mutation DeleteStaff(
-    $input: DeleteStaffInput!
-    $condition: ModelStaffConditionInput
-  ) {
-    deleteStaff(input: $input, condition: $condition) {
-      id
-      name
-      workers {
-        items {
-          id
-          name
-          logIndex
-          timeSheetIndex
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          staffWorkersId
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const createWorker = /* GraphQL */ `
   mutation CreateWorker(
     $input: CreateWorkerInput!
@@ -106,19 +10,6 @@ export const createWorker = /* GraphQL */ `
     createWorker(input: $input, condition: $condition) {
       id
       name
-      staff {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       timesheet {
         id
         startTime
@@ -151,7 +42,6 @@ export const createWorker = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      staffWorkersId
     }
   }
 `;
@@ -163,19 +53,6 @@ export const updateWorker = /* GraphQL */ `
     updateWorker(input: $input, condition: $condition) {
       id
       name
-      staff {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       timesheet {
         id
         startTime
@@ -208,7 +85,6 @@ export const updateWorker = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      staffWorkersId
     }
   }
 `;
@@ -220,19 +96,6 @@ export const deleteWorker = /* GraphQL */ `
     deleteWorker(input: $input, condition: $condition) {
       id
       name
-      staff {
-        id
-        name
-        workers {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
       timesheet {
         id
         startTime
@@ -265,7 +128,6 @@ export const deleteWorker = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      staffWorkersId
     }
   }
 `;

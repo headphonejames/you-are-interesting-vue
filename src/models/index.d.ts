@@ -1,10 +1,6 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
-
-type StaffMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
+import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 type WorkerMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
@@ -18,32 +14,9 @@ type ConnectionLogMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type EagerStaff = {
-  readonly id: string;
-  readonly name: string;
-  readonly workers?: (Worker | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyStaff = {
-  readonly id: string;
-  readonly name: string;
-  readonly workers: AsyncCollection<Worker>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Staff = LazyLoading extends LazyLoadingDisabled ? EagerStaff : LazyStaff
-
-export declare const Staff: (new (init: ModelInit<Staff, StaffMetaData>) => Staff) & {
-  copyOf(source: Staff, mutator: (draft: MutableModel<Staff, StaffMetaData>) => MutableModel<Staff, StaffMetaData> | void): Staff;
-}
-
 type EagerWorker = {
   readonly id: string;
   readonly name: string;
-  readonly staff?: Staff | null;
   readonly logIndex?: number | null;
   readonly timeSheetIndex?: number | null;
   readonly createdAt?: string | null;
@@ -53,7 +26,6 @@ type EagerWorker = {
 type LazyWorker = {
   readonly id: string;
   readonly name: string;
-  readonly staff: AsyncItem<Staff | undefined>;
   readonly logIndex?: number | null;
   readonly timeSheetIndex?: number | null;
   readonly createdAt?: string | null;
