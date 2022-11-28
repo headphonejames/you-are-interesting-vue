@@ -28,13 +28,13 @@ export default {
     };
   },
   computed: {
-    orderedWorkers: function () {
-      return this.workers.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1)
+    orderedWorkers: function () : any {
+      return this.workers.sort((a: any, b: any) => (a.createdAt > b.createdAt) ? 1 : -1)
     }
   },
   methods: {
     async getWorkers() {
-      const workerQuery = await API.graphql({
+      const workerQuery: any = await API.graphql({
         query: listWorkers
       });
       this.workers = workerQuery.data.listWorkers.items;
@@ -54,7 +54,7 @@ export default {
       await this.getWorkers();
       this.workerName = '';
     },
-    async checkboxClicked(worker) {
+    async checkboxClicked(worker: any) {
       const workerData = {
         id: worker.id
         };
@@ -80,7 +80,7 @@ export default {
         <label for="checkbox">{{worker.name}}</label>
       </ui-form-field>
     </div>
-    <section :dir="controls.rtl ? 'rtl' : null">
+    <section>
       <ui-textfield
           v-model="workerName"
           :disabled="controls.disabled"
