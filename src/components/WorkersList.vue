@@ -1,6 +1,6 @@
 <script lang="ts">
 import { API } from 'aws-amplify';
-import { createWorker } from '@/graphql/mutations';
+import { createWorker, deleteWorker } from '@/graphql/mutations';
 import { listWorkers, getWorker } from '@/graphql/queries';
 
 // check pinia obj first?
@@ -27,6 +27,11 @@ export default {
       }
     };
   },
+  computed: {
+    orderedWorkers: function () {
+      return this.workers.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1)
+    }
+  },
   methods: {
     async getWorkers() {
       const workerQuery = await API.graphql({
@@ -38,9 +43,9 @@ export default {
       const { workerName } = this;
       if ( !workerName ) return;
       const workerData = {
-        'name': workerName,
-        'logIndex': 0,
-        'timeSheetIndex': 0
+        name: workerName,
+        logIndex: 0,
+        timeSheetIndex: 0
       };
       await API.graphql({
         query: createWorker,
@@ -49,9 +54,15 @@ export default {
       await this.getWorkers();
       this.workerName = '';
     },
-    check(event, worker) {
-      console.log(event);
-      console.log(worker)
+    async checkboxClicked(worker) {
+      const workerData = {
+        id: worker.id
+        };
+      await API.graphql({
+        query: deleteWorker,
+        variables: { input: workerData }
+      });
+      await this.getWorkers();
     }
   }
 }
@@ -60,10 +71,10 @@ export default {
 <template>
   <main>
     <h1>Workers List</h1>
-    <div v-for="worker in workers" :key="worker.id">
+    <div v-for="worker in orderedWorkers" :key="worker.id">
       <ui-form-field>
         <ui-checkbox
-            @change="check($event, worker)"
+            @change="checkboxClicked(worker)"
             :input-id="worker.id"
         ></ui-checkbox>
         <label for="checkbox">{{worker.name}}</label>

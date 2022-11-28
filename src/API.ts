@@ -7,7 +7,6 @@ export type CreateWorkerInput = {
   name: string,
   logIndex?: number | null,
   timeSheetIndex?: number | null,
-  _version?: number | null,
 };
 
 export type ModelWorkerConditionInput = {
@@ -81,9 +80,6 @@ export type Worker = {
   timeSheetIndex?: number | null,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type Timesheet = {
@@ -94,9 +90,6 @@ export type Timesheet = {
   notes?: string | null,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type ConnectionLog = {
@@ -110,9 +103,6 @@ export type ConnectionLog = {
   notes?: string | null,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateWorkerInput = {
@@ -120,12 +110,10 @@ export type UpdateWorkerInput = {
   name?: string | null,
   logIndex?: number | null,
   timeSheetIndex?: number | null,
-  _version?: number | null,
 };
 
 export type DeleteWorkerInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type CreateTimesheetInput = {
@@ -133,7 +121,6 @@ export type CreateTimesheetInput = {
   startTime?: string | null,
   stopTime?: string | null,
   notes?: string | null,
-  _version?: number | null,
 };
 
 export type ModelTimesheetConditionInput = {
@@ -150,12 +137,10 @@ export type UpdateTimesheetInput = {
   startTime?: string | null,
   stopTime?: string | null,
   notes?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteTimesheetInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type CreateConnectionLogInput = {
@@ -166,7 +151,6 @@ export type CreateConnectionLogInput = {
   prompt?: string | null,
   rating?: number | null,
   notes?: string | null,
-  _version?: number | null,
 };
 
 export type ModelConnectionLogConditionInput = {
@@ -189,12 +173,10 @@ export type UpdateConnectionLogInput = {
   prompt?: string | null,
   rating?: number | null,
   notes?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteConnectionLogInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type ModelWorkerFilterInput = {
@@ -227,7 +209,6 @@ export type ModelWorkerConnection = {
   __typename: "ModelWorkerConnection",
   items:  Array<Worker | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelTimesheetFilterInput = {
@@ -244,7 +225,6 @@ export type ModelTimesheetConnection = {
   __typename: "ModelTimesheetConnection",
   items:  Array<Timesheet | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelConnectionLogFilterInput = {
@@ -264,7 +244,6 @@ export type ModelConnectionLogConnection = {
   __typename: "ModelConnectionLogConnection",
   items:  Array<ConnectionLog | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelSubscriptionWorkerFilterInput = {
@@ -357,9 +336,6 @@ export type CreateWorkerMutation = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     connectionLog?:  Array< {
       __typename: "ConnectionLog",
@@ -372,17 +348,11 @@ export type CreateWorkerMutation = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -404,9 +374,6 @@ export type UpdateWorkerMutation = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     connectionLog?:  Array< {
       __typename: "ConnectionLog",
@@ -419,17 +386,11 @@ export type UpdateWorkerMutation = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -451,9 +412,6 @@ export type DeleteWorkerMutation = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     connectionLog?:  Array< {
       __typename: "ConnectionLog",
@@ -466,17 +424,11 @@ export type DeleteWorkerMutation = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -494,9 +446,6 @@ export type CreateTimesheetMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -514,9 +463,6 @@ export type UpdateTimesheetMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -534,9 +480,6 @@ export type DeleteTimesheetMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -557,9 +500,6 @@ export type CreateConnectionLogMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -580,9 +520,6 @@ export type UpdateConnectionLogMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -603,9 +540,6 @@ export type DeleteConnectionLogMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -626,9 +560,6 @@ export type GetWorkerQuery = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     connectionLog?:  Array< {
       __typename: "ConnectionLog",
@@ -641,17 +572,11 @@ export type GetWorkerQuery = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -676,9 +601,6 @@ export type ListWorkersQuery = {
         notes?: string | null,
         createdAt: string,
         updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
       } | null > | null,
       connectionLog?:  Array< {
         __typename: "ConnectionLog",
@@ -691,74 +613,13 @@ export type ListWorkersQuery = {
         notes?: string | null,
         createdAt: string,
         updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
       } | null > | null,
       logIndex?: number | null,
       timeSheetIndex?: number | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncWorkersQueryVariables = {
-  filter?: ModelWorkerFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncWorkersQuery = {
-  syncWorkers?:  {
-    __typename: "ModelWorkerConnection",
-    items:  Array< {
-      __typename: "Worker",
-      id: string,
-      name: string,
-      timesheet?:  Array< {
-        __typename: "Timesheet",
-        id: string,
-        startTime?: string | null,
-        stopTime?: string | null,
-        notes?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null > | null,
-      connectionLog?:  Array< {
-        __typename: "ConnectionLog",
-        id: string,
-        timeContact?: string | null,
-        timePrompt?: string | null,
-        timeFinished?: string | null,
-        prompt?: string | null,
-        rating?: number | null,
-        notes?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null > | null,
-      logIndex?: number | null,
-      timeSheetIndex?: number | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -775,9 +636,6 @@ export type GetTimesheetQuery = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -798,39 +656,8 @@ export type ListTimesheetsQuery = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncTimesheetsQueryVariables = {
-  filter?: ModelTimesheetFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncTimesheetsQuery = {
-  syncTimesheets?:  {
-    __typename: "ModelTimesheetConnection",
-    items:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -850,9 +677,6 @@ export type GetConnectionLogQuery = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -876,42 +700,8 @@ export type ListConnectionLogsQuery = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncConnectionLogsQueryVariables = {
-  filter?: ModelConnectionLogFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncConnectionLogsQuery = {
-  syncConnectionLogs?:  {
-    __typename: "ModelConnectionLogConnection",
-    items:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?: string | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -932,9 +722,6 @@ export type OnCreateWorkerSubscription = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     connectionLog?:  Array< {
       __typename: "ConnectionLog",
@@ -947,17 +734,11 @@ export type OnCreateWorkerSubscription = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -978,9 +759,6 @@ export type OnUpdateWorkerSubscription = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     connectionLog?:  Array< {
       __typename: "ConnectionLog",
@@ -993,17 +771,11 @@ export type OnUpdateWorkerSubscription = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1024,9 +796,6 @@ export type OnDeleteWorkerSubscription = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     connectionLog?:  Array< {
       __typename: "ConnectionLog",
@@ -1039,17 +808,11 @@ export type OnDeleteWorkerSubscription = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1066,9 +829,6 @@ export type OnCreateTimesheetSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1085,9 +845,6 @@ export type OnUpdateTimesheetSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1104,9 +861,6 @@ export type OnDeleteTimesheetSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1126,9 +880,6 @@ export type OnCreateConnectionLogSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1148,9 +899,6 @@ export type OnUpdateConnectionLogSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1170,8 +918,5 @@ export type OnDeleteConnectionLogSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };

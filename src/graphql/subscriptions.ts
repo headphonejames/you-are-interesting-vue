@@ -14,9 +14,6 @@ export const onCreateWorker = /* GraphQL */ `
         notes
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       connectionLog {
         id
@@ -28,17 +25,11 @@ export const onCreateWorker = /* GraphQL */ `
         notes
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       logIndex
       timeSheetIndex
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -54,9 +45,6 @@ export const onUpdateWorker = /* GraphQL */ `
         notes
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       connectionLog {
         id
@@ -68,17 +56,11 @@ export const onUpdateWorker = /* GraphQL */ `
         notes
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       logIndex
       timeSheetIndex
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -94,9 +76,6 @@ export const onDeleteWorker = /* GraphQL */ `
         notes
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       connectionLog {
         id
@@ -108,17 +87,11 @@ export const onDeleteWorker = /* GraphQL */ `
         notes
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       logIndex
       timeSheetIndex
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -133,9 +106,6 @@ export const onCreateTimesheet = /* GraphQL */ `
       notes
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -150,9 +120,6 @@ export const onUpdateTimesheet = /* GraphQL */ `
       notes
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -167,9 +134,6 @@ export const onDeleteTimesheet = /* GraphQL */ `
       notes
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -187,9 +151,6 @@ export const onCreateConnectionLog = /* GraphQL */ `
       notes
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -207,9 +168,6 @@ export const onUpdateConnectionLog = /* GraphQL */ `
       notes
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -227,9 +185,6 @@ export const onDeleteConnectionLog = /* GraphQL */ `
       notes
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
