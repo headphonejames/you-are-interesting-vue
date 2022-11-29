@@ -20,7 +20,12 @@ export const getWorker = /* GraphQL */ `
         timeContact
         timePrompt
         timeFinished
-        prompt
+        prompt {
+          id
+          prompt
+          createdAt
+          updatedAt
+        }
         rating
         notes
         createdAt
@@ -56,7 +61,6 @@ export const listWorkers = /* GraphQL */ `
           timeContact
           timePrompt
           timeFinished
-          prompt
           rating
           notes
           createdAt
@@ -64,6 +68,33 @@ export const listWorkers = /* GraphQL */ `
         }
         logIndex
         timeSheetIndex
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPrompt = /* GraphQL */ `
+  query GetPrompt($id: ID!) {
+    getPrompt(id: $id) {
+      id
+      prompt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPrompts = /* GraphQL */ `
+  query ListPrompts(
+    $filter: ModelPromptFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPrompts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        prompt
         createdAt
         updatedAt
       }
@@ -109,7 +140,12 @@ export const getConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt
+      prompt {
+        id
+        prompt
+        createdAt
+        updatedAt
+      }
       rating
       notes
       createdAt
@@ -129,7 +165,12 @@ export const listConnectionLogs = /* GraphQL */ `
         timeContact
         timePrompt
         timeFinished
-        prompt
+        prompt {
+          id
+          prompt
+          createdAt
+          updatedAt
+        }
         rating
         notes
         createdAt

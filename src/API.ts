@@ -98,9 +98,17 @@ export type ConnectionLog = {
   timeContact?: string | null,
   timePrompt?: string | null,
   timeFinished?: string | null,
-  prompt?: string | null,
+  prompt?: Prompt | null,
   rating?: number | null,
   notes?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type Prompt = {
+  __typename: "Prompt",
+  id: string,
+  prompt: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -113,6 +121,27 @@ export type UpdateWorkerInput = {
 };
 
 export type DeleteWorkerInput = {
+  id: string,
+};
+
+export type CreatePromptInput = {
+  id?: string | null,
+  prompt: string,
+};
+
+export type ModelPromptConditionInput = {
+  prompt?: ModelStringInput | null,
+  and?: Array< ModelPromptConditionInput | null > | null,
+  or?: Array< ModelPromptConditionInput | null > | null,
+  not?: ModelPromptConditionInput | null,
+};
+
+export type UpdatePromptInput = {
+  id: string,
+  prompt?: string | null,
+};
+
+export type DeletePromptInput = {
   id: string,
 };
 
@@ -148,7 +177,6 @@ export type CreateConnectionLogInput = {
   timeContact?: string | null,
   timePrompt?: string | null,
   timeFinished?: string | null,
-  prompt?: string | null,
   rating?: number | null,
   notes?: string | null,
 };
@@ -157,7 +185,6 @@ export type ModelConnectionLogConditionInput = {
   timeContact?: ModelStringInput | null,
   timePrompt?: ModelStringInput | null,
   timeFinished?: ModelStringInput | null,
-  prompt?: ModelStringInput | null,
   rating?: ModelIntInput | null,
   notes?: ModelStringInput | null,
   and?: Array< ModelConnectionLogConditionInput | null > | null,
@@ -170,7 +197,6 @@ export type UpdateConnectionLogInput = {
   timeContact?: string | null,
   timePrompt?: string | null,
   timeFinished?: string | null,
-  prompt?: string | null,
   rating?: number | null,
   notes?: string | null,
 };
@@ -211,6 +237,20 @@ export type ModelWorkerConnection = {
   nextToken?: string | null,
 };
 
+export type ModelPromptFilterInput = {
+  id?: ModelIDInput | null,
+  prompt?: ModelStringInput | null,
+  and?: Array< ModelPromptFilterInput | null > | null,
+  or?: Array< ModelPromptFilterInput | null > | null,
+  not?: ModelPromptFilterInput | null,
+};
+
+export type ModelPromptConnection = {
+  __typename: "ModelPromptConnection",
+  items:  Array<Prompt | null >,
+  nextToken?: string | null,
+};
+
 export type ModelTimesheetFilterInput = {
   id?: ModelIDInput | null,
   startTime?: ModelStringInput | null,
@@ -232,7 +272,6 @@ export type ModelConnectionLogFilterInput = {
   timeContact?: ModelStringInput | null,
   timePrompt?: ModelStringInput | null,
   timeFinished?: ModelStringInput | null,
-  prompt?: ModelStringInput | null,
   rating?: ModelIntInput | null,
   notes?: ModelStringInput | null,
   and?: Array< ModelConnectionLogFilterInput | null > | null,
@@ -297,6 +336,13 @@ export type ModelSubscriptionIntInput = {
   notIn?: Array< number | null > | null,
 };
 
+export type ModelSubscriptionPromptFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  prompt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionPromptFilterInput | null > | null,
+  or?: Array< ModelSubscriptionPromptFilterInput | null > | null,
+};
+
 export type ModelSubscriptionTimesheetFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   startTime?: ModelSubscriptionStringInput | null,
@@ -311,7 +357,6 @@ export type ModelSubscriptionConnectionLogFilterInput = {
   timeContact?: ModelSubscriptionStringInput | null,
   timePrompt?: ModelSubscriptionStringInput | null,
   timeFinished?: ModelSubscriptionStringInput | null,
-  prompt?: ModelSubscriptionStringInput | null,
   rating?: ModelSubscriptionIntInput | null,
   notes?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionConnectionLogFilterInput | null > | null,
@@ -343,7 +388,13 @@ export type CreateWorkerMutation = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -381,7 +432,13 @@ export type UpdateWorkerMutation = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -419,7 +476,13 @@ export type DeleteWorkerMutation = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -427,6 +490,51 @@ export type DeleteWorkerMutation = {
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreatePromptMutationVariables = {
+  input: CreatePromptInput,
+  condition?: ModelPromptConditionInput | null,
+};
+
+export type CreatePromptMutation = {
+  createPrompt?:  {
+    __typename: "Prompt",
+    id: string,
+    prompt: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdatePromptMutationVariables = {
+  input: UpdatePromptInput,
+  condition?: ModelPromptConditionInput | null,
+};
+
+export type UpdatePromptMutation = {
+  updatePrompt?:  {
+    __typename: "Prompt",
+    id: string,
+    prompt: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeletePromptMutationVariables = {
+  input: DeletePromptInput,
+  condition?: ModelPromptConditionInput | null,
+};
+
+export type DeletePromptMutation = {
+  deletePrompt?:  {
+    __typename: "Prompt",
+    id: string,
+    prompt: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -495,7 +603,13 @@ export type CreateConnectionLogMutation = {
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
-    prompt?: string | null,
+    prompt?:  {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     rating?: number | null,
     notes?: string | null,
     createdAt: string,
@@ -515,7 +629,13 @@ export type UpdateConnectionLogMutation = {
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
-    prompt?: string | null,
+    prompt?:  {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     rating?: number | null,
     notes?: string | null,
     createdAt: string,
@@ -535,7 +655,13 @@ export type DeleteConnectionLogMutation = {
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
-    prompt?: string | null,
+    prompt?:  {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     rating?: number | null,
     notes?: string | null,
     createdAt: string,
@@ -567,7 +693,13 @@ export type GetWorkerQuery = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -608,7 +740,6 @@ export type ListWorkersQuery = {
         timeContact?: string | null,
         timePrompt?: string | null,
         timeFinished?: string | null,
-        prompt?: string | null,
         rating?: number | null,
         notes?: string | null,
         createdAt: string,
@@ -616,6 +747,40 @@ export type ListWorkersQuery = {
       } | null > | null,
       logIndex?: number | null,
       timeSheetIndex?: number | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetPromptQueryVariables = {
+  id: string,
+};
+
+export type GetPromptQuery = {
+  getPrompt?:  {
+    __typename: "Prompt",
+    id: string,
+    prompt: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListPromptsQueryVariables = {
+  filter?: ModelPromptFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPromptsQuery = {
+  listPrompts?:  {
+    __typename: "ModelPromptConnection",
+    items:  Array< {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -672,7 +837,13 @@ export type GetConnectionLogQuery = {
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
-    prompt?: string | null,
+    prompt?:  {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     rating?: number | null,
     notes?: string | null,
     createdAt: string,
@@ -695,7 +866,13 @@ export type ListConnectionLogsQuery = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -729,7 +906,13 @@ export type OnCreateWorkerSubscription = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -766,7 +949,13 @@ export type OnUpdateWorkerSubscription = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -803,7 +992,13 @@ export type OnDeleteWorkerSubscription = {
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
-      prompt?: string | null,
+      prompt?:  {
+        __typename: "Prompt",
+        id: string,
+        prompt: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       rating?: number | null,
       notes?: string | null,
       createdAt: string,
@@ -811,6 +1006,48 @@ export type OnDeleteWorkerSubscription = {
     } | null > | null,
     logIndex?: number | null,
     timeSheetIndex?: number | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreatePromptSubscriptionVariables = {
+  filter?: ModelSubscriptionPromptFilterInput | null,
+};
+
+export type OnCreatePromptSubscription = {
+  onCreatePrompt?:  {
+    __typename: "Prompt",
+    id: string,
+    prompt: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdatePromptSubscriptionVariables = {
+  filter?: ModelSubscriptionPromptFilterInput | null,
+};
+
+export type OnUpdatePromptSubscription = {
+  onUpdatePrompt?:  {
+    __typename: "Prompt",
+    id: string,
+    prompt: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeletePromptSubscriptionVariables = {
+  filter?: ModelSubscriptionPromptFilterInput | null,
+};
+
+export type OnDeletePromptSubscription = {
+  onDeletePrompt?:  {
+    __typename: "Prompt",
+    id: string,
+    prompt: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -875,7 +1112,13 @@ export type OnCreateConnectionLogSubscription = {
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
-    prompt?: string | null,
+    prompt?:  {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     rating?: number | null,
     notes?: string | null,
     createdAt: string,
@@ -894,7 +1137,13 @@ export type OnUpdateConnectionLogSubscription = {
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
-    prompt?: string | null,
+    prompt?:  {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     rating?: number | null,
     notes?: string | null,
     createdAt: string,
@@ -913,7 +1162,13 @@ export type OnDeleteConnectionLogSubscription = {
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
-    prompt?: string | null,
+    prompt?:  {
+      __typename: "Prompt",
+      id: string,
+      prompt: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     rating?: number | null,
     notes?: string | null,
     createdAt: string,

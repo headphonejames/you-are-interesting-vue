@@ -1,18 +1,18 @@
 <script lang="ts">
-import { API } from 'aws-amplify';
-import { createWorker, deleteWorker } from '@/graphql/mutations';
-import { listWorkers, getWorker } from '@/graphql/queries';
+import { API } from "aws-amplify";
+import { createWorker, deleteWorker } from "@/graphql/mutations";
+import { listWorkers } from "@/graphql/queries";
 
 // check pinia obj first?
 
 export default {
-  name: 'WorkersList',
+  name: "WorkersList",
   async created() {
     this.getWorkers();
   },
   data() {
     return {
-      workerName: '',
+      workerName: "",
       workers: [],
       checkboxes: [],
       controls: {
@@ -23,76 +23,78 @@ export default {
         customColor: false,
         helperText: false,
         isVisible: false,
-        isValidMsg: false
-      }
+        isValidMsg: false,
+      },
     };
   },
   computed: {
-    orderedWorkers: function () : any {
-      return this.workers.sort((a: any, b: any) => (a.createdAt > b.createdAt) ? 1 : -1)
-    }
+    orderedWorkers: function (): any {
+      return this.workers.sort((a: any, b: any) =>
+        a.createdAt > b.createdAt ? 1 : -1
+      );
+    },
   },
   methods: {
     async getWorkers() {
       const workerQuery: any = await API.graphql({
-        query: listWorkers
+        query: listWorkers,
       });
       this.workers = workerQuery.data.listWorkers.items;
     },
     async addWorker() {
       const { workerName } = this;
-      if ( !workerName ) return;
+      if (!workerName) return;
       const workerData = {
         name: workerName,
         logIndex: 0,
-        timeSheetIndex: 0
+        timeSheetIndex: 0,
       };
       await API.graphql({
         query: createWorker,
-        variables: { input: workerData }
+        variables: { input: workerData },
       });
       await this.getWorkers();
-      this.workerName = '';
+      this.workerName = "";
     },
     async checkboxClicked(worker: any) {
       const workerData = {
-        id: worker.id
-        };
+        id: worker.id,
+      };
       await API.graphql({
         query: deleteWorker,
-        variables: { input: workerData }
+        variables: { input: workerData },
       });
       await this.getWorkers();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <template>
   <main>
     <h1>Workers List</h1>
-    <div v-for="worker in orderedWorkers" :key="worker.id">
+    <div v-for="workerObj in orderedWorkers" :key="workerObj.id">
       <ui-form-field>
         <ui-checkbox
-            @change="checkboxClicked(worker)"
-            :input-id="worker.id"
+          @change="checkboxClicked(workerObj)"
+          :input-id="workerObj.id"
         ></ui-checkbox>
-        <label for="checkbox">{{worker.name}}</label>
+        <label for="checkbox">{{ workerObj.name }}</label>
       </ui-form-field>
     </div>
     <section>
       <ui-textfield
-          v-model="workerName"
-          :disabled="controls.disabled"
-          :dense="controls.dense"
-          :required="controls.required"
-          :class="{'demo-text-field-custom-colors': controls.customColor}"
-          helper-text-id="my-text-field-helper-text"
-          v-on:keyup.enter="addWorker"
+        v-model="workerName"
+        :disabled="controls.disabled"
+        :dense="controls.dense"
+        :required="controls.required"
+        :class="{ 'demo-text-field-custom-colors': controls.customColor }"
+        helper-text-id="my-text-field-helper-text"
+        v-on:keyup.enter="addWorker"
       >
         Worker Name
       </ui-textfield>
       <ui-button v-on:click="addWorker">Create Worker</ui-button>
-      </section>
+    </section>
   </main>
 </template>

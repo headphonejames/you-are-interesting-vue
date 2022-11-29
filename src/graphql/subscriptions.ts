@@ -20,7 +20,12 @@ export const onCreateWorker = /* GraphQL */ `
         timeContact
         timePrompt
         timeFinished
-        prompt
+        prompt {
+          id
+          prompt
+          createdAt
+          updatedAt
+        }
         rating
         notes
         createdAt
@@ -51,7 +56,12 @@ export const onUpdateWorker = /* GraphQL */ `
         timeContact
         timePrompt
         timeFinished
-        prompt
+        prompt {
+          id
+          prompt
+          createdAt
+          updatedAt
+        }
         rating
         notes
         createdAt
@@ -82,7 +92,12 @@ export const onDeleteWorker = /* GraphQL */ `
         timeContact
         timePrompt
         timeFinished
-        prompt
+        prompt {
+          id
+          prompt
+          createdAt
+          updatedAt
+        }
         rating
         notes
         createdAt
@@ -90,6 +105,36 @@ export const onDeleteWorker = /* GraphQL */ `
       }
       logIndex
       timeSheetIndex
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePrompt = /* GraphQL */ `
+  subscription OnCreatePrompt($filter: ModelSubscriptionPromptFilterInput) {
+    onCreatePrompt(filter: $filter) {
+      id
+      prompt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePrompt = /* GraphQL */ `
+  subscription OnUpdatePrompt($filter: ModelSubscriptionPromptFilterInput) {
+    onUpdatePrompt(filter: $filter) {
+      id
+      prompt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePrompt = /* GraphQL */ `
+  subscription OnDeletePrompt($filter: ModelSubscriptionPromptFilterInput) {
+    onDeletePrompt(filter: $filter) {
+      id
+      prompt
       createdAt
       updatedAt
     }
@@ -146,7 +191,12 @@ export const onCreateConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt
+      prompt {
+        id
+        prompt
+        createdAt
+        updatedAt
+      }
       rating
       notes
       createdAt
@@ -163,7 +213,12 @@ export const onUpdateConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt
+      prompt {
+        id
+        prompt
+        createdAt
+        updatedAt
+      }
       rating
       notes
       createdAt
@@ -180,7 +235,12 @@ export const onDeleteConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt
+      prompt {
+        id
+        prompt
+        createdAt
+        updatedAt
+      }
       rating
       notes
       createdAt
