@@ -1,15 +1,9 @@
 <script lang="ts">
-import { API } from "aws-amplify";
-import { createWorker, deleteWorker } from "@/graphql/mutations";
-import { listWorkers } from "@/graphql/queries";
-
+import { getWorkers, removeWorker, addWorker } from "@/components/Workers";
 // check pinia obj first?
 
 export default {
   name: "WorkersList",
-  async created() {
-    this.getWorkers();
-  },
   data() {
     return {
       workerName: "",
@@ -34,37 +28,17 @@ export default {
       );
     },
   },
+  async created() {
+    this.workers = await getWorkers();
+  },
   methods: {
-    async getWorkers() {
-      const workerQuery: any = await API.graphql({
-        query: listWorkers,
-      });
-      this.workers = workerQuery.data.listWorkers.items;
-    },
-    async addWorker() {
+    async submitName() {
       const { workerName } = this;
-      if (!workerName) return;
-      const workerData = {
-        name: workerName,
-        logIndex: 0,
-        timeSheetIndex: 0,
-      };
-      await API.graphql({
-        query: createWorker,
-        variables: { input: workerData },
-      });
-      await this.getWorkers();
+      this.workers = await addWorker(workerName);
       this.workerName = "";
     },
     async checkboxClicked(worker: any) {
-      const workerData = {
-        id: worker.id,
-      };
-      await API.graphql({
-        query: deleteWorker,
-        variables: { input: workerData },
-      });
-      await this.getWorkers();
+      this.workers = await removeWorker(worker);
     },
   },
 };
@@ -90,11 +64,11 @@ export default {
         :required="controls.required"
         :class="{ 'demo-text-field-custom-colors': controls.customColor }"
         helper-text-id="my-text-field-helper-text"
-        v-on:keyup.enter="addWorker"
+        v-on:keyup.enter="submitName"
       >
         Worker Name
       </ui-textfield>
-      <ui-button v-on:click="addWorker">Create Worker</ui-button>
+      <ui-button v-on:click="submitName">Create Worker</ui-button>
     </section>
   </main>
 </template>

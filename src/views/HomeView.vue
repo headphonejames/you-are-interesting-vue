@@ -1,11 +1,16 @@
  <script lang="ts">
 import router from "../router";
+import { setAction, created, removed} from "@/components/RemoteKeyboard"
+
 export default {
   created() {
-    window.addEventListener('keydown', this.handleKeyDown);
+    setAction("Digit1", this.workers);
+    setAction("Digit2", this.prompts);
+    setAction("Digit3", this.shiftstart);
+    created();
   },
   beforeUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
+    removed();
   },
   methods: {
     workers() {
@@ -14,20 +19,9 @@ export default {
     prompts() {
       router.push({ path: '/promptslist' })
     },
-    startshift() {
-      router.push({ path: '/startshift' })
+    shiftstart() {
+      router.push({ path: '/shiftstart' })
     },
-    handleKeyDown(event : KeyboardEvent) {
-      if (event.code === "Digit1") {
-        this.workers();
-      }
-      if (event.code === "Digit2") {
-        this.prompts();
-      }
-      if (event.code === "Digit3") {
-        this.startshift();
-      }
-    }
   }
 }
 </script>
@@ -45,7 +39,7 @@ export default {
       <nav>
         <ui-button raised @click="workers">Workers List</ui-button>
         <ui-button raised @click="prompts">Prompts List</ui-button>
-        <ui-button raised @click="startshift">Start Shift</ui-button>
+        <ui-button raised @click="shiftstart">Start Shift</ui-button>
       </nav>
     </div>
   </header>
