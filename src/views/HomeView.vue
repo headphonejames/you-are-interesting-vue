@@ -1,6 +1,6 @@
- <script lang="ts">
+<script lang="ts">
 import router from "../router";
-import { setAction, created, removed} from "@/components/RemoteKeyboard"
+import { setAction, created, removed } from "@/components/RemoteKeyboard";
 
 export default {
   created() {
@@ -14,26 +14,26 @@ export default {
   },
   methods: {
     workers() {
-      router.push({ path: '/workerslist' })
+      router.push({ path: "/workerslist" });
     },
     prompts() {
-      router.push({ path: '/promptslist' })
+      router.push({ path: "/promptslist" });
     },
     shiftstart() {
-      router.push({ path: '/shiftstart' })
+      router.push({ path: "/shiftstart" });
     },
-  }
-}
+  },
+};
 </script>
 
 <template>
   <header>
     <img
-        alt="You are interesting logo"
-        class="logo"
-        src="@/assets/img/YAI-logo-color-sm.png"
-        width="125"
-        height="125"
+      alt="You are interesting logo"
+      class="logo"
+      src="@/assets/img/YAI-logo-color-sm.png"
+      width="125"
+      height="125"
     />
     <div class="wrapper">
       <nav>

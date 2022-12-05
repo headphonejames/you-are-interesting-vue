@@ -1,9 +1,10 @@
 <script lang="ts">
 import { getWorkers } from "@/components/Workers";
 import router from "../router";
+import { mapWritableState } from "pinia";
+import { useWorkerStore } from "@/stores/worker";
 
 export default {
-  name: "ShiftStartView",
   data() {
     return {
       workers: [],
@@ -15,17 +16,16 @@ export default {
   computed: {
     orderedWorkers: function (): any {
       return this.workers.sort((a: any, b: any) =>
-          a.createdAt > b.createdAt ? 1 : -1
+        a.createdAt > b.createdAt ? 1 : -1
       );
     },
+    ...mapWritableState(useWorkerStore, ["name"]),
   },
   methods: {
     beginShift(workerName: string) {
+      this.name = workerName;
       router.push({
         path: "/waitingforfriend",
-        params: {
-          workerName: workerName,
-        },
       });
     },
   },

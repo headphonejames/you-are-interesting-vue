@@ -28,7 +28,6 @@ const router = createRouter({
       path: "/waitingforfriend",
       name: "waitingForFriend",
       component: WaitingForFriendView,
-      props: true,
     },
     // {
     //   path: "/connectionbegin",
