@@ -5,14 +5,14 @@
 export type CreateWorkerInput = {
   id?: string | null,
   name: string,
-  logIndex?: number | null,
-  timeSheetIndex?: number | null,
+  currentTimesheetId?: string | null,
+  currentConnectionLogId?: string | null,
 };
 
 export type ModelWorkerConditionInput = {
   name?: ModelStringInput | null,
-  logIndex?: ModelIntInput | null,
-  timeSheetIndex?: ModelIntInput | null,
+  currentTimesheetId?: ModelStringInput | null,
+  currentConnectionLogId?: ModelStringInput | null,
   and?: Array< ModelWorkerConditionInput | null > | null,
   or?: Array< ModelWorkerConditionInput | null > | null,
   not?: ModelWorkerConditionInput | null,
@@ -58,43 +58,46 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type Worker = {
   __typename: "Worker",
   id: string,
   name: string,
-  timesheet?:  Array<Timesheet | null > | null,
-  connectionLog?:  Array<ConnectionLog | null > | null,
-  logIndex?: number | null,
-  timeSheetIndex?: number | null,
+  timesheets?: ModelTimesheetConnection | null,
+  currentTimesheetId?: string | null,
+  connectionLogs?: ModelConnectionLogConnection | null,
+  currentConnectionLogId?: string | null,
   createdAt: string,
   updatedAt: string,
+};
+
+export type ModelTimesheetConnection = {
+  __typename: "ModelTimesheetConnection",
+  items:  Array<Timesheet | null >,
+  nextToken?: string | null,
 };
 
 export type Timesheet = {
   __typename: "Timesheet",
   id: string,
+  worker?: Worker | null,
   startTime?: string | null,
   stopTime?: string | null,
   notes?: string | null,
   createdAt: string,
   updatedAt: string,
+  workerTimesheetsId?: string | null,
+};
+
+export type ModelConnectionLogConnection = {
+  __typename: "ModelConnectionLogConnection",
+  items:  Array<ConnectionLog | null >,
+  nextToken?: string | null,
 };
 
 export type ConnectionLog = {
   __typename: "ConnectionLog",
   id: string,
+  worker?: Worker | null,
   timeContact?: string | null,
   timePrompt?: string | null,
   timeFinished?: string | null,
@@ -103,6 +106,7 @@ export type ConnectionLog = {
   notes?: string | null,
   createdAt: string,
   updatedAt: string,
+  workerConnectionLogsId?: string | null,
 };
 
 export type Prompt = {
@@ -116,8 +120,8 @@ export type Prompt = {
 export type UpdateWorkerInput = {
   id: string,
   name?: string | null,
-  logIndex?: number | null,
-  timeSheetIndex?: number | null,
+  currentTimesheetId?: string | null,
+  currentConnectionLogId?: string | null,
 };
 
 export type DeleteWorkerInput = {
@@ -150,6 +154,7 @@ export type CreateTimesheetInput = {
   startTime?: string | null,
   stopTime?: string | null,
   notes?: string | null,
+  workerTimesheetsId?: string | null,
 };
 
 export type ModelTimesheetConditionInput = {
@@ -159,60 +164,7 @@ export type ModelTimesheetConditionInput = {
   and?: Array< ModelTimesheetConditionInput | null > | null,
   or?: Array< ModelTimesheetConditionInput | null > | null,
   not?: ModelTimesheetConditionInput | null,
-};
-
-export type UpdateTimesheetInput = {
-  id: string,
-  startTime?: string | null,
-  stopTime?: string | null,
-  notes?: string | null,
-};
-
-export type DeleteTimesheetInput = {
-  id: string,
-};
-
-export type CreateConnectionLogInput = {
-  id?: string | null,
-  timeContact?: string | null,
-  timePrompt?: string | null,
-  timeFinished?: string | null,
-  rating?: number | null,
-  notes?: string | null,
-};
-
-export type ModelConnectionLogConditionInput = {
-  timeContact?: ModelStringInput | null,
-  timePrompt?: ModelStringInput | null,
-  timeFinished?: ModelStringInput | null,
-  rating?: ModelIntInput | null,
-  notes?: ModelStringInput | null,
-  and?: Array< ModelConnectionLogConditionInput | null > | null,
-  or?: Array< ModelConnectionLogConditionInput | null > | null,
-  not?: ModelConnectionLogConditionInput | null,
-};
-
-export type UpdateConnectionLogInput = {
-  id: string,
-  timeContact?: string | null,
-  timePrompt?: string | null,
-  timeFinished?: string | null,
-  rating?: number | null,
-  notes?: string | null,
-};
-
-export type DeleteConnectionLogInput = {
-  id: string,
-};
-
-export type ModelWorkerFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  logIndex?: ModelIntInput | null,
-  timeSheetIndex?: ModelIntInput | null,
-  and?: Array< ModelWorkerFilterInput | null > | null,
-  or?: Array< ModelWorkerFilterInput | null > | null,
-  not?: ModelWorkerFilterInput | null,
+  workerTimesheetsId?: ModelIDInput | null,
 };
 
 export type ModelIDInput = {
@@ -230,6 +182,82 @@ export type ModelIDInput = {
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
 };
+
+export type UpdateTimesheetInput = {
+  id: string,
+  startTime?: string | null,
+  stopTime?: string | null,
+  notes?: string | null,
+  workerTimesheetsId?: string | null,
+};
+
+export type DeleteTimesheetInput = {
+  id: string,
+};
+
+export type CreateConnectionLogInput = {
+  id?: string | null,
+  timeContact?: string | null,
+  timePrompt?: string | null,
+  timeFinished?: string | null,
+  rating?: number | null,
+  notes?: string | null,
+  workerConnectionLogsId?: string | null,
+};
+
+export type ModelConnectionLogConditionInput = {
+  timeContact?: ModelStringInput | null,
+  timePrompt?: ModelStringInput | null,
+  timeFinished?: ModelStringInput | null,
+  rating?: ModelIntInput | null,
+  notes?: ModelStringInput | null,
+  and?: Array< ModelConnectionLogConditionInput | null > | null,
+  or?: Array< ModelConnectionLogConditionInput | null > | null,
+  not?: ModelConnectionLogConditionInput | null,
+  workerConnectionLogsId?: ModelIDInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type UpdateConnectionLogInput = {
+  id: string,
+  timeContact?: string | null,
+  timePrompt?: string | null,
+  timeFinished?: string | null,
+  rating?: number | null,
+  notes?: string | null,
+  workerConnectionLogsId?: string | null,
+};
+
+export type DeleteConnectionLogInput = {
+  id: string,
+};
+
+export type ModelWorkerFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  currentTimesheetId?: ModelStringInput | null,
+  currentConnectionLogId?: ModelStringInput | null,
+  and?: Array< ModelWorkerFilterInput | null > | null,
+  or?: Array< ModelWorkerFilterInput | null > | null,
+  not?: ModelWorkerFilterInput | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelWorkerConnection = {
   __typename: "ModelWorkerConnection",
@@ -259,12 +287,7 @@ export type ModelTimesheetFilterInput = {
   and?: Array< ModelTimesheetFilterInput | null > | null,
   or?: Array< ModelTimesheetFilterInput | null > | null,
   not?: ModelTimesheetFilterInput | null,
-};
-
-export type ModelTimesheetConnection = {
-  __typename: "ModelTimesheetConnection",
-  items:  Array<Timesheet | null >,
-  nextToken?: string | null,
+  workerTimesheetsId?: ModelIDInput | null,
 };
 
 export type ModelConnectionLogFilterInput = {
@@ -277,19 +300,14 @@ export type ModelConnectionLogFilterInput = {
   and?: Array< ModelConnectionLogFilterInput | null > | null,
   or?: Array< ModelConnectionLogFilterInput | null > | null,
   not?: ModelConnectionLogFilterInput | null,
-};
-
-export type ModelConnectionLogConnection = {
-  __typename: "ModelConnectionLogConnection",
-  items:  Array<ConnectionLog | null >,
-  nextToken?: string | null,
+  workerConnectionLogsId?: ModelIDInput | null,
 };
 
 export type ModelSubscriptionWorkerFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
-  logIndex?: ModelSubscriptionIntInput | null,
-  timeSheetIndex?: ModelSubscriptionIntInput | null,
+  currentTimesheetId?: ModelSubscriptionStringInput | null,
+  currentConnectionLogId?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionWorkerFilterInput | null > | null,
   or?: Array< ModelSubscriptionWorkerFilterInput | null > | null,
 };
@@ -324,18 +342,6 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
-};
-
 export type ModelSubscriptionPromptFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   prompt?: ModelSubscriptionStringInput | null,
@@ -363,6 +369,18 @@ export type ModelSubscriptionConnectionLogFilterInput = {
   or?: Array< ModelSubscriptionConnectionLogFilterInput | null > | null,
 };
 
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
+};
+
 export type CreateWorkerMutationVariables = {
   input: CreateWorkerInput,
   condition?: ModelWorkerConditionInput | null,
@@ -373,35 +391,38 @@ export type CreateWorkerMutation = {
     __typename: "Worker",
     id: string,
     name: string,
-    timesheet?:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    connectionLog?:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?:  {
-        __typename: "Prompt",
+    timesheets?:  {
+      __typename: "ModelTimesheetConnection",
+      items:  Array< {
+        __typename: "Timesheet",
         id: string,
-        prompt: string,
+        startTime?: string | null,
+        stopTime?: string | null,
+        notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    logIndex?: number | null,
-    timeSheetIndex?: number | null,
+        workerTimesheetsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentTimesheetId?: string | null,
+    connectionLogs?:  {
+      __typename: "ModelConnectionLogConnection",
+      items:  Array< {
+        __typename: "ConnectionLog",
+        id: string,
+        timeContact?: string | null,
+        timePrompt?: string | null,
+        timeFinished?: string | null,
+        rating?: number | null,
+        notes?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        workerConnectionLogsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentConnectionLogId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -417,35 +438,38 @@ export type UpdateWorkerMutation = {
     __typename: "Worker",
     id: string,
     name: string,
-    timesheet?:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    connectionLog?:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?:  {
-        __typename: "Prompt",
+    timesheets?:  {
+      __typename: "ModelTimesheetConnection",
+      items:  Array< {
+        __typename: "Timesheet",
         id: string,
-        prompt: string,
+        startTime?: string | null,
+        stopTime?: string | null,
+        notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    logIndex?: number | null,
-    timeSheetIndex?: number | null,
+        workerTimesheetsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentTimesheetId?: string | null,
+    connectionLogs?:  {
+      __typename: "ModelConnectionLogConnection",
+      items:  Array< {
+        __typename: "ConnectionLog",
+        id: string,
+        timeContact?: string | null,
+        timePrompt?: string | null,
+        timeFinished?: string | null,
+        rating?: number | null,
+        notes?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        workerConnectionLogsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentConnectionLogId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -461,35 +485,38 @@ export type DeleteWorkerMutation = {
     __typename: "Worker",
     id: string,
     name: string,
-    timesheet?:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    connectionLog?:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?:  {
-        __typename: "Prompt",
+    timesheets?:  {
+      __typename: "ModelTimesheetConnection",
+      items:  Array< {
+        __typename: "Timesheet",
         id: string,
-        prompt: string,
+        startTime?: string | null,
+        stopTime?: string | null,
+        notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    logIndex?: number | null,
-    timeSheetIndex?: number | null,
+        workerTimesheetsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentTimesheetId?: string | null,
+    connectionLogs?:  {
+      __typename: "ModelConnectionLogConnection",
+      items:  Array< {
+        __typename: "ConnectionLog",
+        id: string,
+        timeContact?: string | null,
+        timePrompt?: string | null,
+        timeFinished?: string | null,
+        rating?: number | null,
+        notes?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        workerConnectionLogsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentConnectionLogId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -549,11 +576,29 @@ export type CreateTimesheetMutation = {
   createTimesheet?:  {
     __typename: "Timesheet",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     startTime?: string | null,
     stopTime?: string | null,
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerTimesheetsId?: string | null,
   } | null,
 };
 
@@ -566,11 +611,29 @@ export type UpdateTimesheetMutation = {
   updateTimesheet?:  {
     __typename: "Timesheet",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     startTime?: string | null,
     stopTime?: string | null,
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerTimesheetsId?: string | null,
   } | null,
 };
 
@@ -583,11 +646,29 @@ export type DeleteTimesheetMutation = {
   deleteTimesheet?:  {
     __typename: "Timesheet",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     startTime?: string | null,
     stopTime?: string | null,
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerTimesheetsId?: string | null,
   } | null,
 };
 
@@ -600,6 +681,23 @@ export type CreateConnectionLogMutation = {
   createConnectionLog?:  {
     __typename: "ConnectionLog",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
@@ -614,6 +712,7 @@ export type CreateConnectionLogMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerConnectionLogsId?: string | null,
   } | null,
 };
 
@@ -626,6 +725,23 @@ export type UpdateConnectionLogMutation = {
   updateConnectionLog?:  {
     __typename: "ConnectionLog",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
@@ -640,6 +756,7 @@ export type UpdateConnectionLogMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerConnectionLogsId?: string | null,
   } | null,
 };
 
@@ -652,6 +769,23 @@ export type DeleteConnectionLogMutation = {
   deleteConnectionLog?:  {
     __typename: "ConnectionLog",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
@@ -666,6 +800,7 @@ export type DeleteConnectionLogMutation = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerConnectionLogsId?: string | null,
   } | null,
 };
 
@@ -678,54 +813,9 @@ export type GetWorkerQuery = {
     __typename: "Worker",
     id: string,
     name: string,
-    timesheet?:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    connectionLog?:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?:  {
-        __typename: "Prompt",
-        id: string,
-        prompt: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    logIndex?: number | null,
-    timeSheetIndex?: number | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListWorkersQueryVariables = {
-  filter?: ModelWorkerFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListWorkersQuery = {
-  listWorkers?:  {
-    __typename: "ModelWorkerConnection",
-    items:  Array< {
-      __typename: "Worker",
-      id: string,
-      name: string,
-      timesheet?:  Array< {
+    timesheets?:  {
+      __typename: "ModelTimesheetConnection",
+      items:  Array< {
         __typename: "Timesheet",
         id: string,
         startTime?: string | null,
@@ -733,8 +823,14 @@ export type ListWorkersQuery = {
         notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      connectionLog?:  Array< {
+        workerTimesheetsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentTimesheetId?: string | null,
+    connectionLogs?:  {
+      __typename: "ModelConnectionLogConnection",
+      items:  Array< {
         __typename: "ConnectionLog",
         id: string,
         timeContact?: string | null,
@@ -744,9 +840,41 @@ export type ListWorkersQuery = {
         notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null > | null,
-      logIndex?: number | null,
-      timeSheetIndex?: number | null,
+        workerConnectionLogsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentConnectionLogId?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListWorkersQueryVariables = {
+  id?: string | null,
+  filter?: ModelWorkerFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListWorkersQuery = {
+  listWorkers?:  {
+    __typename: "ModelWorkerConnection",
+    items:  Array< {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -769,9 +897,11 @@ export type GetPromptQuery = {
 };
 
 export type ListPromptsQueryVariables = {
+  id?: string | null,
   filter?: ModelPromptFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPromptsQuery = {
@@ -796,18 +926,38 @@ export type GetTimesheetQuery = {
   getTimesheet?:  {
     __typename: "Timesheet",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     startTime?: string | null,
     stopTime?: string | null,
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerTimesheetsId?: string | null,
   } | null,
 };
 
 export type ListTimesheetsQueryVariables = {
+  id?: string | null,
   filter?: ModelTimesheetFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListTimesheetsQuery = {
@@ -816,11 +966,21 @@ export type ListTimesheetsQuery = {
     items:  Array< {
       __typename: "Timesheet",
       id: string,
+      worker?:  {
+        __typename: "Worker",
+        id: string,
+        name: string,
+        currentTimesheetId?: string | null,
+        currentConnectionLogId?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       startTime?: string | null,
       stopTime?: string | null,
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
+      workerTimesheetsId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -834,6 +994,23 @@ export type GetConnectionLogQuery = {
   getConnectionLog?:  {
     __typename: "ConnectionLog",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
@@ -848,13 +1025,16 @@ export type GetConnectionLogQuery = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerConnectionLogsId?: string | null,
   } | null,
 };
 
 export type ListConnectionLogsQueryVariables = {
+  id?: string | null,
   filter?: ModelConnectionLogFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListConnectionLogsQuery = {
@@ -863,6 +1043,15 @@ export type ListConnectionLogsQuery = {
     items:  Array< {
       __typename: "ConnectionLog",
       id: string,
+      worker?:  {
+        __typename: "Worker",
+        id: string,
+        name: string,
+        currentTimesheetId?: string | null,
+        currentConnectionLogId?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       timeContact?: string | null,
       timePrompt?: string | null,
       timeFinished?: string | null,
@@ -877,6 +1066,7 @@ export type ListConnectionLogsQuery = {
       notes?: string | null,
       createdAt: string,
       updatedAt: string,
+      workerConnectionLogsId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -891,35 +1081,38 @@ export type OnCreateWorkerSubscription = {
     __typename: "Worker",
     id: string,
     name: string,
-    timesheet?:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    connectionLog?:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?:  {
-        __typename: "Prompt",
+    timesheets?:  {
+      __typename: "ModelTimesheetConnection",
+      items:  Array< {
+        __typename: "Timesheet",
         id: string,
-        prompt: string,
+        startTime?: string | null,
+        stopTime?: string | null,
+        notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    logIndex?: number | null,
-    timeSheetIndex?: number | null,
+        workerTimesheetsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentTimesheetId?: string | null,
+    connectionLogs?:  {
+      __typename: "ModelConnectionLogConnection",
+      items:  Array< {
+        __typename: "ConnectionLog",
+        id: string,
+        timeContact?: string | null,
+        timePrompt?: string | null,
+        timeFinished?: string | null,
+        rating?: number | null,
+        notes?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        workerConnectionLogsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentConnectionLogId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -934,35 +1127,38 @@ export type OnUpdateWorkerSubscription = {
     __typename: "Worker",
     id: string,
     name: string,
-    timesheet?:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    connectionLog?:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?:  {
-        __typename: "Prompt",
+    timesheets?:  {
+      __typename: "ModelTimesheetConnection",
+      items:  Array< {
+        __typename: "Timesheet",
         id: string,
-        prompt: string,
+        startTime?: string | null,
+        stopTime?: string | null,
+        notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    logIndex?: number | null,
-    timeSheetIndex?: number | null,
+        workerTimesheetsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentTimesheetId?: string | null,
+    connectionLogs?:  {
+      __typename: "ModelConnectionLogConnection",
+      items:  Array< {
+        __typename: "ConnectionLog",
+        id: string,
+        timeContact?: string | null,
+        timePrompt?: string | null,
+        timeFinished?: string | null,
+        rating?: number | null,
+        notes?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        workerConnectionLogsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentConnectionLogId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -977,35 +1173,38 @@ export type OnDeleteWorkerSubscription = {
     __typename: "Worker",
     id: string,
     name: string,
-    timesheet?:  Array< {
-      __typename: "Timesheet",
-      id: string,
-      startTime?: string | null,
-      stopTime?: string | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    connectionLog?:  Array< {
-      __typename: "ConnectionLog",
-      id: string,
-      timeContact?: string | null,
-      timePrompt?: string | null,
-      timeFinished?: string | null,
-      prompt?:  {
-        __typename: "Prompt",
+    timesheets?:  {
+      __typename: "ModelTimesheetConnection",
+      items:  Array< {
+        __typename: "Timesheet",
         id: string,
-        prompt: string,
+        startTime?: string | null,
+        stopTime?: string | null,
+        notes?: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
-      rating?: number | null,
-      notes?: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    logIndex?: number | null,
-    timeSheetIndex?: number | null,
+        workerTimesheetsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentTimesheetId?: string | null,
+    connectionLogs?:  {
+      __typename: "ModelConnectionLogConnection",
+      items:  Array< {
+        __typename: "ConnectionLog",
+        id: string,
+        timeContact?: string | null,
+        timePrompt?: string | null,
+        timeFinished?: string | null,
+        rating?: number | null,
+        notes?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        workerConnectionLogsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    currentConnectionLogId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1061,11 +1260,29 @@ export type OnCreateTimesheetSubscription = {
   onCreateTimesheet?:  {
     __typename: "Timesheet",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     startTime?: string | null,
     stopTime?: string | null,
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerTimesheetsId?: string | null,
   } | null,
 };
 
@@ -1077,11 +1294,29 @@ export type OnUpdateTimesheetSubscription = {
   onUpdateTimesheet?:  {
     __typename: "Timesheet",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     startTime?: string | null,
     stopTime?: string | null,
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerTimesheetsId?: string | null,
   } | null,
 };
 
@@ -1093,11 +1328,29 @@ export type OnDeleteTimesheetSubscription = {
   onDeleteTimesheet?:  {
     __typename: "Timesheet",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     startTime?: string | null,
     stopTime?: string | null,
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerTimesheetsId?: string | null,
   } | null,
 };
 
@@ -1109,6 +1362,23 @@ export type OnCreateConnectionLogSubscription = {
   onCreateConnectionLog?:  {
     __typename: "ConnectionLog",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
@@ -1123,6 +1393,7 @@ export type OnCreateConnectionLogSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerConnectionLogsId?: string | null,
   } | null,
 };
 
@@ -1134,6 +1405,23 @@ export type OnUpdateConnectionLogSubscription = {
   onUpdateConnectionLog?:  {
     __typename: "ConnectionLog",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
@@ -1148,6 +1436,7 @@ export type OnUpdateConnectionLogSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerConnectionLogsId?: string | null,
   } | null,
 };
 
@@ -1159,6 +1448,23 @@ export type OnDeleteConnectionLogSubscription = {
   onDeleteConnectionLog?:  {
     __typename: "ConnectionLog",
     id: string,
+    worker?:  {
+      __typename: "Worker",
+      id: string,
+      name: string,
+      timesheets?:  {
+        __typename: "ModelTimesheetConnection",
+        nextToken?: string | null,
+      } | null,
+      currentTimesheetId?: string | null,
+      connectionLogs?:  {
+        __typename: "ModelConnectionLogConnection",
+        nextToken?: string | null,
+      } | null,
+      currentConnectionLogId?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     timeContact?: string | null,
     timePrompt?: string | null,
     timeFinished?: string | null,
@@ -1173,5 +1479,6 @@ export type OnDeleteConnectionLogSubscription = {
     notes?: string | null,
     createdAt: string,
     updatedAt: string,
+    workerConnectionLogsId?: string | null,
   } | null,
 };

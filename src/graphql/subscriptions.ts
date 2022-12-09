@@ -7,32 +7,34 @@ export const onCreateWorker = /* GraphQL */ `
     onCreateWorker(filter: $filter) {
       id
       name
-      timesheet {
-        id
-        startTime
-        stopTime
-        notes
-        createdAt
-        updatedAt
-      }
-      connectionLog {
-        id
-        timeContact
-        timePrompt
-        timeFinished
-        prompt {
+      timesheets {
+        items {
           id
-          prompt
+          startTime
+          stopTime
+          notes
           createdAt
           updatedAt
+          workerTimesheetsId
         }
-        rating
-        notes
-        createdAt
-        updatedAt
+        nextToken
       }
-      logIndex
-      timeSheetIndex
+      currentTimesheetId
+      connectionLogs {
+        items {
+          id
+          timeContact
+          timePrompt
+          timeFinished
+          rating
+          notes
+          createdAt
+          updatedAt
+          workerConnectionLogsId
+        }
+        nextToken
+      }
+      currentConnectionLogId
       createdAt
       updatedAt
     }
@@ -43,32 +45,34 @@ export const onUpdateWorker = /* GraphQL */ `
     onUpdateWorker(filter: $filter) {
       id
       name
-      timesheet {
-        id
-        startTime
-        stopTime
-        notes
-        createdAt
-        updatedAt
-      }
-      connectionLog {
-        id
-        timeContact
-        timePrompt
-        timeFinished
-        prompt {
+      timesheets {
+        items {
           id
-          prompt
+          startTime
+          stopTime
+          notes
           createdAt
           updatedAt
+          workerTimesheetsId
         }
-        rating
-        notes
-        createdAt
-        updatedAt
+        nextToken
       }
-      logIndex
-      timeSheetIndex
+      currentTimesheetId
+      connectionLogs {
+        items {
+          id
+          timeContact
+          timePrompt
+          timeFinished
+          rating
+          notes
+          createdAt
+          updatedAt
+          workerConnectionLogsId
+        }
+        nextToken
+      }
+      currentConnectionLogId
       createdAt
       updatedAt
     }
@@ -79,32 +83,34 @@ export const onDeleteWorker = /* GraphQL */ `
     onDeleteWorker(filter: $filter) {
       id
       name
-      timesheet {
-        id
-        startTime
-        stopTime
-        notes
-        createdAt
-        updatedAt
-      }
-      connectionLog {
-        id
-        timeContact
-        timePrompt
-        timeFinished
-        prompt {
+      timesheets {
+        items {
           id
-          prompt
+          startTime
+          stopTime
+          notes
           createdAt
           updatedAt
+          workerTimesheetsId
         }
-        rating
-        notes
-        createdAt
-        updatedAt
+        nextToken
       }
-      logIndex
-      timeSheetIndex
+      currentTimesheetId
+      connectionLogs {
+        items {
+          id
+          timeContact
+          timePrompt
+          timeFinished
+          rating
+          notes
+          createdAt
+          updatedAt
+          workerConnectionLogsId
+        }
+        nextToken
+      }
+      currentConnectionLogId
       createdAt
       updatedAt
     }
@@ -146,11 +152,26 @@ export const onCreateTimesheet = /* GraphQL */ `
   ) {
     onCreateTimesheet(filter: $filter) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       startTime
       stopTime
       notes
       createdAt
       updatedAt
+      workerTimesheetsId
     }
   }
 `;
@@ -160,11 +181,26 @@ export const onUpdateTimesheet = /* GraphQL */ `
   ) {
     onUpdateTimesheet(filter: $filter) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       startTime
       stopTime
       notes
       createdAt
       updatedAt
+      workerTimesheetsId
     }
   }
 `;
@@ -174,11 +210,26 @@ export const onDeleteTimesheet = /* GraphQL */ `
   ) {
     onDeleteTimesheet(filter: $filter) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       startTime
       stopTime
       notes
       createdAt
       updatedAt
+      workerTimesheetsId
     }
   }
 `;
@@ -188,6 +239,20 @@ export const onCreateConnectionLog = /* GraphQL */ `
   ) {
     onCreateConnectionLog(filter: $filter) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       timeContact
       timePrompt
       timeFinished
@@ -201,6 +266,7 @@ export const onCreateConnectionLog = /* GraphQL */ `
       notes
       createdAt
       updatedAt
+      workerConnectionLogsId
     }
   }
 `;
@@ -210,6 +276,20 @@ export const onUpdateConnectionLog = /* GraphQL */ `
   ) {
     onUpdateConnectionLog(filter: $filter) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       timeContact
       timePrompt
       timeFinished
@@ -223,6 +303,7 @@ export const onUpdateConnectionLog = /* GraphQL */ `
       notes
       createdAt
       updatedAt
+      workerConnectionLogsId
     }
   }
 `;
@@ -232,6 +313,20 @@ export const onDeleteConnectionLog = /* GraphQL */ `
   ) {
     onDeleteConnectionLog(filter: $filter) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       timeContact
       timePrompt
       timeFinished
@@ -245,6 +340,7 @@ export const onDeleteConnectionLog = /* GraphQL */ `
       notes
       createdAt
       updatedAt
+      workerConnectionLogsId
     }
   }
 `;

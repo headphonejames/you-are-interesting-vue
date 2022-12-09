@@ -7,56 +7,21 @@ export const getWorker = /* GraphQL */ `
     getWorker(id: $id) {
       id
       name
-      timesheet {
-        id
-        startTime
-        stopTime
-        notes
-        createdAt
-        updatedAt
-      }
-      connectionLog {
-        id
-        timeContact
-        timePrompt
-        timeFinished
-        prompt {
-          id
-          prompt
-          createdAt
-          updatedAt
-        }
-        rating
-        notes
-        createdAt
-        updatedAt
-      }
-      logIndex
-      timeSheetIndex
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listWorkers = /* GraphQL */ `
-  query ListWorkers(
-    $filter: ModelWorkerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listWorkers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        timesheet {
+      timesheets {
+        items {
           id
           startTime
           stopTime
           notes
           createdAt
           updatedAt
+          workerTimesheetsId
         }
-        connectionLog {
+        nextToken
+      }
+      currentTimesheetId
+      connectionLogs {
+        items {
           id
           timeContact
           timePrompt
@@ -65,9 +30,42 @@ export const listWorkers = /* GraphQL */ `
           notes
           createdAt
           updatedAt
+          workerConnectionLogsId
         }
-        logIndex
-        timeSheetIndex
+        nextToken
+      }
+      currentConnectionLogId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listWorkers = /* GraphQL */ `
+  query ListWorkers(
+    $id: ID
+    $filter: ModelWorkerFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listWorkers(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
         createdAt
         updatedAt
       }
@@ -87,11 +85,19 @@ export const getPrompt = /* GraphQL */ `
 `;
 export const listPrompts = /* GraphQL */ `
   query ListPrompts(
+    $id: ID
     $filter: ModelPromptFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listPrompts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPrompts(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         prompt
@@ -106,28 +112,60 @@ export const getTimesheet = /* GraphQL */ `
   query GetTimesheet($id: ID!) {
     getTimesheet(id: $id) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       startTime
       stopTime
       notes
       createdAt
       updatedAt
+      workerTimesheetsId
     }
   }
 `;
 export const listTimesheets = /* GraphQL */ `
   query ListTimesheets(
+    $id: ID
     $filter: ModelTimesheetFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listTimesheets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTimesheets(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
+        worker {
+          id
+          name
+          currentTimesheetId
+          currentConnectionLogId
+          createdAt
+          updatedAt
+        }
         startTime
         stopTime
         notes
         createdAt
         updatedAt
+        workerTimesheetsId
       }
       nextToken
     }
@@ -137,6 +175,20 @@ export const getConnectionLog = /* GraphQL */ `
   query GetConnectionLog($id: ID!) {
     getConnectionLog(id: $id) {
       id
+      worker {
+        id
+        name
+        timesheets {
+          nextToken
+        }
+        currentTimesheetId
+        connectionLogs {
+          nextToken
+        }
+        currentConnectionLogId
+        createdAt
+        updatedAt
+      }
       timeContact
       timePrompt
       timeFinished
@@ -150,18 +202,35 @@ export const getConnectionLog = /* GraphQL */ `
       notes
       createdAt
       updatedAt
+      workerConnectionLogsId
     }
   }
 `;
 export const listConnectionLogs = /* GraphQL */ `
   query ListConnectionLogs(
+    $id: ID
     $filter: ModelConnectionLogFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listConnectionLogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listConnectionLogs(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
+        worker {
+          id
+          name
+          currentTimesheetId
+          currentConnectionLogId
+          createdAt
+          updatedAt
+        }
         timeContact
         timePrompt
         timeFinished
@@ -175,6 +244,7 @@ export const listConnectionLogs = /* GraphQL */ `
         notes
         createdAt
         updatedAt
+        workerConnectionLogsId
       }
       nextToken
     }

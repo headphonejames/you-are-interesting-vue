@@ -1,6 +1,6 @@
-import { listWorkers } from "@/graphql/queries";
-import { createWorker, deleteWorker } from "@/graphql/mutations";
-
+import {getWorker, listWorkers, listTimesheets} from "@/graphql/queries";
+import {createTimesheet, createWorker, deleteWorker, updateWorker} from "@/graphql/mutations";
+import { removeTimesheets } from "@/components/Timesheet";
 import { API } from "aws-amplify";
 
 export const getWorkers = async () => {
@@ -14,23 +14,40 @@ export const addWorker = async (workerName: string) => {
   if (!workerName) return;
   const workerData = {
     name: workerName,
-    logIndex: 0,
-    timeSheetIndex: 0,
   };
-  await API.graphql({
+  const workerDBData = await API.graphql({
     query: createWorker,
     variables: { input: workerData },
+  });
+
+  const newWorker = workerDBData.data.createWorker;
+  const timesheetData = {
+    startTime: Date.now(),
+    workerTimesheetsId: newWorker.id,
+  };
+  const timesheetDBData = await API.graphql({
+    query: createTimesheet,
+    variables: { input: timesheetData },
+  });
+  const newTimesheet = timesheetDBData.data.createTimesheet;
+
+  const updatedWorkerData = {
+    currentTimesheetId: newTimesheet.id,
+    id: newWorker.id,
+  };
+  const updatedWorkerDBData = await API.graphql({
+    query: updateWorker,
+    variables: { input: updatedWorkerData },
   });
   return await getWorkers();
 };
 
 export const removeWorker = async (worker: any) => {
-  const workerData = {
-    id: worker.id,
-  };
+  await removeTimesheets(worker.id);
+
   await API.graphql({
     query: deleteWorker,
-    variables: { input: workerData },
+    variables: { input: { id: worker.id } },
   });
   return await getWorkers();
 };

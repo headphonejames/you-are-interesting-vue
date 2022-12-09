@@ -12,7 +12,6 @@ export default {
 </script>
 
 <template>
-  {{ name }}
+  <h1>Waiting for a friend</h1>
 
-  Waiting for friend
 </template>

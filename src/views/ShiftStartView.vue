@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     beginShift(workerName: string) {
+      // create an entry for timesheet
       this.name = workerName;
       router.push({
         path: "/waitingforfriend",

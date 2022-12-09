@@ -1,1 +1,4 @@
 https://github.com/aws-amplify/amplify-js/issues/9639#issuecomment-1321101328
+
+todo:
+persistent store with pinia
