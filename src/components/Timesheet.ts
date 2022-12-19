@@ -1,5 +1,5 @@
 import { listTimesheets } from "@/graphql/queries";
-import { createTimesheet, deleteTimesheet } from "@/graphql/mutations";
+import { updateWorker, createTimesheet, deleteTimesheet } from "@/graphql/mutations";
 
 import { API } from "aws-amplify";
 
@@ -9,6 +9,27 @@ export const getTimesheets = async () => {
   });
   return timesheetsQuery.data.listTimesheets.items;
 };
+
+export const createTimesheetForWorker = async (workerId: string) => {
+  const timesheetData = {
+    startTime: Date.now(),
+    workerTimesheetsId: workerId,
+  };
+  const timesheetDBData: any = await API.graphql({
+    query: createTimesheet,
+    variables: { input: timesheetData },
+  });
+  const newTimesheet = timesheetDBData.data.createTimesheet;
+
+  const updatedWorkerData = {
+    currentTimesheetId: newTimesheet.id,
+    id: workerId,
+  };
+  const updatedWorkerDBData = await API.graphql({
+    query: updateWorker,
+    variables: { input: updatedWorkerData },
+  });
+}
 
 export const removeTimesheets = async (timesheetId: number) => {
   // delete all timesheets

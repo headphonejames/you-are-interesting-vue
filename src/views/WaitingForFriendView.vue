@@ -5,7 +5,7 @@ import { mapWritableState } from "pinia";
 export default {
   name: "WaitingForFriendView",
   computed: {
-    ...mapWritableState(useWorkerStore, ["name"]),
+    ...mapWritableState(useWorkerStore, ["worker"]),
   },
   methods: {},
 };
@@ -13,5 +13,5 @@ export default {
 
 <template>
   <h1>Waiting for a friend</h1>
-
+  {{ this.worker }}
 </template>
