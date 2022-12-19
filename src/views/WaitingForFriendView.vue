@@ -1,11 +1,11 @@
 <script lang="ts">
 import { useWorkerStore } from "@/stores/worker";
-import { mapWritableState } from "pinia";
+import { mapState } from "pinia";
 
 export default {
   name: "WaitingForFriendView",
   computed: {
-    ...mapWritableState(useWorkerStore, ["worker"]),
+    ...mapState(useWorkerStore, ["worker"]),
   },
   methods: {},
 };
@@ -13,5 +13,5 @@ export default {
 
 <template>
   <h1>Waiting for a friend</h1>
-  {{ this.worker }}
+  {{ worker.id }}
 </template>
