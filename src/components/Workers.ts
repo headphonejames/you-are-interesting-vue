@@ -15,7 +15,7 @@ export const addWorker = async (workerName: string) => {
   const workerData = {
     name: workerName,
   };
-  const workerDBData = await API.graphql({
+  const workerDBData: any = await API.graphql({
     query: createWorker,
     variables: { input: workerData },
   });
@@ -25,7 +25,7 @@ export const addWorker = async (workerName: string) => {
     startTime: Date.now(),
     workerTimesheetsId: newWorker.id,
   };
-  const timesheetDBData = await API.graphql({
+  const timesheetDBData: any = await API.graphql({
     query: createTimesheet,
     variables: { input: timesheetData },
   });

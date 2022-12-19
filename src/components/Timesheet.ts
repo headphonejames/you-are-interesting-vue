@@ -17,7 +17,7 @@ export const removeTimesheets = async (timesheetId: number) => {
       eq: timesheetId,
     },
   };
-  const timesheetsDB = await API.graphql({
+  const timesheetsDB: any = await API.graphql({
     query: listTimesheets,
     variables: {
       filter: filter,
