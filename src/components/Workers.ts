@@ -1,6 +1,7 @@
 import {getWorker, listWorkers} from "@/graphql/queries";
 import { createWorker, deleteWorker, updateWorker} from "@/graphql/mutations";
 import { removeTimesheets } from "@/components/Timesheet";
+import { removeConnectionLogs } from "@/components/ConnectionLog";
 import { API } from "aws-amplify";
 
 export const getWorkers = async () => {

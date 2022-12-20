@@ -25,7 +25,7 @@ export default {
     async beginShift(workerObj: any) {
       if (workerObj.currentTimesheetId === "") {
         // create an entry for timesheet
-        await createTimesheetForWorker(workerObj.id);
+        await createTimesheetForWorker(workerObj);
       }
       // cache the worker in state
       this.worker = workerObj;
@@ -41,6 +41,7 @@ export default {
   <main>
     <h1>Start Shift</h1>
     <div v-for="workerObj in orderedWorkers" :key="workerObj.id">
+<!--    TODO: resume connection if mid connection -->
       <ui-button v-if="workerObj.currentTimesheetId !== ''" raised @click="beginShift(workerObj)">{{
           workerObj.name
       }} (resume shift)</ui-button>

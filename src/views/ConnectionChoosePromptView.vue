@@ -5,7 +5,7 @@ import { createConnectionLogForWorker } from "@/components/ConnectionLog";
 import router from "../router";
 
 export default {
-  name: "WaitingForFriendView",
+  name: "ConnectionChoosePromptView",
   computed: {
     ...mapState(useWorkerStore, ["worker"]),
   },
