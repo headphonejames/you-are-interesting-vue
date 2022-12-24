@@ -1,5 +1,5 @@
 import {getWorker, listWorkers} from "@/graphql/queries";
-import { createWorker, deleteWorker, updateWorker} from "@/graphql/mutations";
+import { createWorker, deleteWorker, updateWorker } from "@/graphql/mutations";
 import { removeTimesheets } from "@/components/Timesheet";
 import { removeConnectionLogs } from "@/components/ConnectionLog";
 import { API } from "aws-amplify";
@@ -9,6 +9,14 @@ export const getWorkers = async () => {
     query: listWorkers,
   });
   return workersQuery.data.listWorkers.items;
+};
+
+export const modifyWorker = async (workerObj: any) => {
+  if (!workerObj) return;
+  await API.graphql({
+    query: updateWorker,
+    variables: { input: workerObj },
+  });
 };
 
 export const addWorker = async (workerName: string) => {

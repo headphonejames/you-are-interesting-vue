@@ -3,9 +3,11 @@ import { useWorkerStore } from "@/stores/worker";
 import { mapState } from "pinia";
 import { createConnectionLogForWorker } from "@/components/ConnectionLog";
 import router from "../router";
+import YAIHeader from "@/components/YAIHeader.vue";
 
 export default {
   name: "ConnectionHappeningView",
+  components: { YAIHeader },
   computed: {
     ...mapState(useWorkerStore, ["worker"]),
   },
@@ -21,7 +23,8 @@ export default {
 </script>
 
 <template>
-  <h1>Waiting for a friend</h1>
-  {{ worker.name }}
+  <YAIHeader
+      title="Waiting for a friend"
+  ></YAIHeader>
   <ui-button outlined @click="connectinBegin(worker)">Contact initiated</ui-button>
 </template>

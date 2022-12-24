@@ -39,7 +39,6 @@ export const createConnectionLogForWorker = async (worker: any) => {
 };
 
 export const updateConnectionLogForWorker = async (worker: any, connectionLogData: any) => {
-
   const connectionLogDBData: any = await API.graphql({
     query: createConnectionLog,
     variables: { input: connectionLogData },

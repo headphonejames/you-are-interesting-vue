@@ -1,15 +1,9 @@
 <script lang="ts">
-import { API } from "aws-amplify";
-import { createPrompt, deletePrompt } from "@/graphql/mutations";
-import { listPrompts } from "@/graphql/queries";
-
+import { getPrompts, addPrompt, removePrompt, sortedPrompts } from "@/components/Prompts"
 // check pinia obj first?
 
 export default {
   name: "PromptsList",
-  async created() {
-    this.getPrompts();
-  },
   data() {
     return {
       promptName: "",
@@ -27,42 +21,23 @@ export default {
       },
     };
   },
+  async created() {
+    this.prompts = await getPrompts();
+  },
   computed: {
     orderedPrompts: function (): any {
-      return this.prompts.sort((a: any, b: any) =>
-        a.createdAt > b.createdAt ? 1 : -1
-      );
+      return sortedPrompts(this.prompts);
     },
   },
   methods: {
-    async getPrompts() {
-      const promptQuery: any = await API.graphql({
-        query: listPrompts,
-      });
-      this.prompts = promptQuery.data.listPrompts.items;
-    },
     async addPrompt() {
       const { promptName } = this;
       if (!promptName) return;
-      const promptData = {
-        prompt: promptName,
-      };
-      await API.graphql({
-        query: createPrompt,
-        variables: { input: promptData },
-      });
-      await this.getPrompts();
+      this.prompts = await addPrompt(promptName);
       this.promptName = "";
     },
     async checkboxClicked(prompt: any) {
-      const promptData = {
-        id: prompt.id,
-      };
-      await API.graphql({
-        query: deletePrompt,
-        variables: { input: promptData },
-      });
-      await this.getPrompts();
+      this.prompts = await removePrompt(prompt);
     },
   },
 };
