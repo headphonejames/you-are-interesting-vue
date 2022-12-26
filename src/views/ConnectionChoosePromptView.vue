@@ -31,6 +31,7 @@ export default {
       // update worker with prompt
       const newConnectionLog = {
         prompt: prompt,
+        timePrompt: Date.now(),
         ...this.connectionLog,
       };
       this.connectionLog = await updateConnectionLogForWorker(this.worker, newConnectionLog);
@@ -38,9 +39,6 @@ export default {
         path: "/connectionhappening",
       });
     },
-    async connectionComplete() {
-
-    }
   },
 };
 </script>

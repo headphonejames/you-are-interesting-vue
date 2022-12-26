@@ -5,10 +5,11 @@ import { createConnectionLogForWorker } from "@/components/ConnectionLog";
 import router from "../router";
 import { useConnectionLogStore } from "@/stores/connectionLog";
 import YAIHeader from "@/components/YAIHeader.vue";
+import EndShiftButton from "@/components/EndShiftButton.vue";
 
 export default {
   name: "WaitingForFriendView",
-  components: { YAIHeader },
+  components: {EndShiftButton, YAIHeader },
   computed: {
     ...mapState(useWorkerStore, ["worker"]),
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
@@ -31,4 +32,5 @@ export default {
   <ui-button outlined @click="connectionBegin(worker)"
     >Contact initiated</ui-button
   >
+  <EndShiftButton/>
 </template>

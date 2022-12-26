@@ -5,7 +5,6 @@ export const useConnectionLogStore = defineStore("connectionLog", {
     return {
       connectionLog: {
         id: "",
-        timePrompt: 0,
         timeContact: 0,
         timeFinished: 0,
         rating: 0,

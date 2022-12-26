@@ -1,30 +1,16 @@
 <script lang="ts">
-import { useWorkerStore } from "@/stores/worker";
-import { mapState } from "pinia";
-import { createConnectionLogForWorker } from "@/components/ConnectionLog";
-import router from "../router";
 import YAIHeader from "@/components/YAIHeader.vue";
+import ConnectionComplete from "@/components/ConnectionComplete.vue";
 
 export default {
   name: "ConnectionHappeningView",
   components: { YAIHeader },
-  computed: {
-    ...mapState(useWorkerStore, ["worker"]),
-  },
-  methods: {
-    async connectionBegin(workerObj: any) {
-      await createConnectionLogForWorker(workerObj);
-      router.push({
-        path: "/connectionbegins",
-      });
-    },
-  },
 };
 </script>
 
 <template>
   <YAIHeader
-      title="Waiting for a friend"
+      title="Connection Happening"
   ></YAIHeader>
-  <ui-button outlined @click="connectinBegin(worker)">Contact initiated</ui-button>
+  <ConnectionComplete/>
 </template>

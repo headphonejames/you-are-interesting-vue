@@ -5,6 +5,7 @@ export const useWorkerStore = defineStore("worker", {
     return {
       worker: {
         id: "",
+        name: "",
       },
     };
   },

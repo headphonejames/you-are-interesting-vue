@@ -6,7 +6,6 @@ import {
 } from "@/graphql/mutations";
 
 import { API } from "aws-amplify";
-import {getTimesheets} from "@/components/Timesheet";
 
 export const getConnectionLogs = async () => {
   const connectionLogsQuery: any = await API.graphql({
@@ -45,17 +44,17 @@ export const updateConnectionLogForWorker = async (worker: any, connectionLogDat
   });
   const newConnectionLog = connectionLogDBData.data.createConnectionLog;
 
+  // update the worker
   const updatedWorkerData = {
     currentConnectionLogId: newConnectionLog.id,
     id: worker.id,
   };
-  const updatedWorkerDBData = await API.graphql({
+  await API.graphql({
     query: updateWorker,
     variables: { input: updatedWorkerData },
   });
   return newConnectionLog;
 };
-
 
 export const addConnectionLog = async (worker: any) => {
   if (!worker) return;

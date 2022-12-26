@@ -1,7 +1,7 @@
 <script lang="ts">
 import {
-  updateConnectionLogForWorker
-} from "@/components/ConnectionLog";
+  finishShiftForWorker
+} from "@/components/Timesheet";
 import router from "@/router";
 import { mapState, mapWritableState } from "pinia";
 import { useWorkerStore } from "@/stores/worker";
@@ -9,13 +9,10 @@ import { useConnectionLogStore } from "@/stores/connectionLog";
 
 export default {
   methods: {
-    async connectionComplete() {
-      const updatedConnectionLog = {
-        timeFinished: Date.now(),
-      }
-      await updateConnectionLogForWorker(this.worker, updatedConnectionLog);
+    async finishShift() {
+      await finishShiftForWorker(this.worker);
       router.push({
-        path: "/waitingforfriend",
+        path: "/shiftfinished",
       });
     },
   },
@@ -27,7 +24,5 @@ export default {
 </script>
 
 <template>
-  <ui-button raised @click="connectionComplete()">Connection Complete</ui-button
-  ><br />
-  More to come!
+  <ui-button raised @click="finishShift()">Finish Shift</ui-button><br />
 </template>

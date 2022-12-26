@@ -1,10 +1,10 @@
-import { getPrompt, listPrompts } from "@/graphql/queries";
-import { createPrompt, deletePrompt, updatePrompt } from "@/graphql/mutations";
+import * as queries from "@/graphql/queries";
+import * as mutations from "@/graphql/mutations";
 import { API } from "aws-amplify";
 
 export const getPrompts = async () => {
   const promptQuery: any = await API.graphql({
-    query: listPrompts,
+    query: queries.listPrompts,
   });
   return promptQuery.data.listPrompts.items;
 };
@@ -15,15 +15,15 @@ export const addPrompt = async (name: string) => {
     prompt: name,
   };
   await API.graphql({
-    query: createPrompt,
+    query: mutations.createPrompt,
     variables: { input: promptData },
   });
-  await getPrompts();
+  return await getPrompts();
 };
 
 export const removePrompt = async (prompt: any) => {
   await API.graphql({
-    query: deletePrompt,
+    query: mutations.deletePrompt,
     variables: { input: { id: prompt.id } },
   });
   return await getPrompts();

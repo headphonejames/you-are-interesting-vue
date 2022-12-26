@@ -3,7 +3,8 @@ import { getWorkers } from "@/components/Workers";
 import router from "../router";
 import { mapWritableState } from "pinia";
 import { useWorkerStore } from "@/stores/worker";
-import { createTimesheetForWorker } from "@/components/Timesheet";
+import { useTimesheetStore } from "@/stores/timesheet";
+import { startShiftForWorker, getTimesheet } from "@/components/Timesheet";
 export default {
   data() {
     return {
@@ -20,12 +21,13 @@ export default {
       );
     },
     ...mapWritableState(useWorkerStore, ["worker"]),
+    ...mapWritableState(useTimesheetStore, ["timesheet"]),
   },
   methods: {
     async beginShift(workerObj: any) {
       if (workerObj.currentTimesheetId === "") {
-        // create an entry for timesheet
-        await createTimesheetForWorker(workerObj);
+        // create an entry for timesheet and cache in pinia store
+        this.timesheet = await startShiftForWorker(workerObj);
       }
       // cache the worker in state
       this.worker = workerObj;
