@@ -9,6 +9,7 @@ export const useConnectionLogStore = defineStore("connectionLog", {
         timeFinished: 0,
         rating: 0,
         notes: "",
+        prompt: "",
       },
     };
   },

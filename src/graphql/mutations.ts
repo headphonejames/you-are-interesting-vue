@@ -29,6 +29,7 @@ export const createWorker = /* GraphQL */ `
           timeContact
           timePrompt
           timeFinished
+          prompt
           rating
           notes
           createdAt
@@ -70,6 +71,7 @@ export const updateWorker = /* GraphQL */ `
           timeContact
           timePrompt
           timeFinished
+          prompt
           rating
           notes
           createdAt
@@ -111,6 +113,7 @@ export const deleteWorker = /* GraphQL */ `
           timeContact
           timePrompt
           timeFinished
+          prompt
           rating
           notes
           createdAt
@@ -278,12 +281,7 @@ export const createConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt {
-        id
-        prompt
-        createdAt
-        updatedAt
-      }
+      prompt
       rating
       notes
       createdAt
@@ -316,12 +314,7 @@ export const updateConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt {
-        id
-        prompt
-        createdAt
-        updatedAt
-      }
+      prompt
       rating
       notes
       createdAt
@@ -354,12 +347,7 @@ export const deleteConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt {
-        id
-        prompt
-        createdAt
-        updatedAt
-      }
+      prompt
       rating
       notes
       createdAt

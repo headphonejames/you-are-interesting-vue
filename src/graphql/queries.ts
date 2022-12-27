@@ -26,6 +26,7 @@ export const getWorker = /* GraphQL */ `
           timeContact
           timePrompt
           timeFinished
+          prompt
           rating
           notes
           createdAt
@@ -192,12 +193,7 @@ export const getConnectionLog = /* GraphQL */ `
       timeContact
       timePrompt
       timeFinished
-      prompt {
-        id
-        prompt
-        createdAt
-        updatedAt
-      }
+      prompt
       rating
       notes
       createdAt
@@ -234,12 +230,7 @@ export const listConnectionLogs = /* GraphQL */ `
         timeContact
         timePrompt
         timeFinished
-        prompt {
-          id
-          prompt
-          createdAt
-          updatedAt
-        }
+        prompt
         rating
         notes
         createdAt

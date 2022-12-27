@@ -1,7 +1,6 @@
 <script lang="ts">
-import { useWorkerStore } from "@/stores/worker";
-import {mapState, mapWritableState} from "pinia";
-import { updateConnectionLogForWorker } from "@/components/ConnectionLog";
+import {mapWritableState} from "pinia";
+import { updateConnectionLogWithPrompt } from "@/components/ConnectionLog";
 import router from "../router";
 import { getPrompts, sortedPrompts } from "@/components/Prompts";
 import {useConnectionLogStore} from "@/stores/connectionLog";
@@ -20,21 +19,19 @@ export default {
     this.prompts = await getPrompts();
   },
   computed: {
-    ...mapState(useWorkerStore, ["worker"]),
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
     orderedPrompts: function (): any {
       return sortedPrompts(this.prompts);
     },
   },
   methods: {
-    async selectPrompt(prompt: any) {
-      // update worker with prompt
+    async selectPrompt(promptObj: any) {
       const newConnectionLog = {
-        prompt: prompt,
-        timePrompt: Date.now(),
         ...this.connectionLog,
+        prompt: promptObj.prompt,
       };
-      this.connectionLog = await updateConnectionLogForWorker(this.worker, newConnectionLog);
+      // update worker with prompt
+      this.connectionLog = await updateConnectionLogWithPrompt(newConnectionLog);
       router.push({
         path: "/connectionhappening",
       });

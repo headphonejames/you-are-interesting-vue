@@ -29,6 +29,8 @@ export default {
         // create an entry for timesheet and cache in pinia store
         this.timesheet = await startShiftForWorker(workerObj);
       }
+      //TODO check where in connection we are
+
       // cache the worker in state
       this.worker = workerObj;
       router.push({
