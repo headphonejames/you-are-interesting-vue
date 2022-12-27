@@ -8,7 +8,7 @@ import { useConnectionLogStore } from "@/stores/connectionLog";
 export default {
   methods: {
     async connectionComplete() {
-      await updateConnectionLogWithEndtime(this.connectionLog);
+      this.connectionLog = await updateConnectionLogWithEndtime(this.connectionLog);
       router.push({
         path: "/connectioncompleted",
       });

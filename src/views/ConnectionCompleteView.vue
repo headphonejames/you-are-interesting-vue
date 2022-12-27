@@ -2,19 +2,24 @@
 import YAIHeader from "@/components/YAIHeader.vue";
 import { updateConnectionLogWithReflections } from "@/components/ConnectionLog";
 import router from "@/router";
-import {mapState, mapWritableState} from "pinia";
-import {useWorkerStore} from "@/stores/worker";
-import {useConnectionLogStore} from "@/stores/connectionLog";
-
+import { mapWritableState } from "pinia";
+import { useConnectionLogStore } from "@/stores/connectionLog";
 export default {
   name: "ConnectionCompleteView",
   components: { YAIHeader },
   methods: {
     async waitForFriend() {
+      let timeFinished = this.connectionLog.timeFinished;
+      if (this.connectionLengthUpdated) {
+        timeFinished =
+          parseInt(this.connectionLog.timeContact) +
+          this.connectionLengthMinutes * 60 * 1000;
+      }
       this.connectionLog = await updateConnectionLogWithReflections(
         this.connectionLog,
         this.rating,
-        this.notes
+        this.notes,
+        timeFinished
       );
       router.push({
         path: "/waitingforfriend",
@@ -25,10 +30,21 @@ export default {
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
   },
   data() {
+    const store = useConnectionLogStore();
+    const connectionLengthMillis =
+      store.connectionLog.timeFinished - store.connectionLog.timeContact;
     return {
       notes: "",
       rating: 0,
+      updatingConnectionTime: false,
+      connectionLengthUpdated: false,
+      connectionLengthMinutes: Math.floor(connectionLengthMillis / (1000 * 60)),
     };
+  },
+  watch: {
+    connectionLengthMinutes(newValue: number) {
+      this.connectionLengthUpdated = true;
+    },
   },
 };
 </script>
@@ -64,6 +80,26 @@ export default {
       cols="40"
       >Notes</ui-textfield
     >
+  </div>
+  <ui-button
+    v-if="!updatingConnectionTime"
+    raised
+    @click="updatingConnectionTime = !updatingConnectionTime"
+    >Update connection time</ui-button
+  >
+  <ui-button
+    v-else
+    raised
+    @click="updatingConnectionTime = !updatingConnectionTime"
+    >Hide connection time</ui-button
+  >
+  <div v-if="updatingConnectionTime">
+    <h2>connection length: {{ this.connectionLengthMinutes }}</h2>
+    <ui-slider
+      v-model="this.connectionLengthMinutes"
+      min="0"
+      max="30"
+    ></ui-slider>
   </div>
   <ui-button raised @click="waitForFriend()"
     >Go back out into the world</ui-button

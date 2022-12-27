@@ -50,13 +50,14 @@ export const updateConnectionLogWithEndtime = async (connectionLog: any) => {
   return await updateConnectionLogForWorker(connectionLogData)
 };
 
-export const updateConnectionLogWithReflections = async (connectionLog: any, rating: number, notes: string) => {
+export const updateConnectionLogWithReflections = async (connectionLog: any, rating: number, notes: string, timeFinished: number) => {
   const connectionLogData = {
     notes: notes,
     rating: rating,
+    timeFinished: timeFinished,
     id: connectionLog.id,
   };
-  return await updateConnectionLogForWorker(connectionLogData)
+  return await updateConnectionLogForWorker(connectionLogData);
 };
 
 export const updateConnectionLogForWorker = async (connectionLogData: any) => {
