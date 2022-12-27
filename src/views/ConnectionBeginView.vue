@@ -5,7 +5,7 @@ import {mapState, mapWritableState} from "pinia";
 import { createConnectionLogForWorker, updateConnectionLogForWorker } from "@/components/ConnectionLog";
 import router from "../router";
 import YAIHeader from "@/components/YAIHeader.vue";
-import ConnectionComplete from "@/components/ConnectionComplete.vue";
+import ConnectionComplete from "@/components/ConnectionCompleteButton.vue";
 
 export default {
   name: "ConnectionBeginView",

@@ -5,7 +5,7 @@ import router from "../router";
 import { getPrompts, sortedPrompts } from "@/components/Prompts";
 import {useConnectionLogStore} from "@/stores/connectionLog";
 import YAIHeader from "@/components/YAIHeader.vue";
-import ConnectionComplete from "@/components/ConnectionComplete.vue";
+import ConnectionComplete from "@/components/ConnectionCompleteButton.vue";
 
 export default {
   name: "ConnectionChoosePromptView",

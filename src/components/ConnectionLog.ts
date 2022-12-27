@@ -42,9 +42,18 @@ export const updateConnectionLogWithPrompt = async (connectionLog: any) => {
   return await updateConnectionLogForWorker(newConnectionLogData)
 };
 
-export const completeConnectionLog = async (connectionLog: any) => {
+export const updateConnectionLogWithEndtime = async (connectionLog: any) => {
   const connectionLogData = {
     timeFinished: Date.now(),
+    id: connectionLog.id,
+  };
+  return await updateConnectionLogForWorker(connectionLogData)
+};
+
+export const updateConnectionLogWithReflections = async (connectionLog: any, rating: number, notes: string) => {
+  const connectionLogData = {
+    notes: notes,
+    rating: rating,
     id: connectionLog.id,
   };
   return await updateConnectionLogForWorker(connectionLogData)
