@@ -4,11 +4,12 @@ import { updateConnectionLogWithReflections } from "@/components/ConnectionLog";
 import router from "@/router";
 import { mapWritableState } from "pinia";
 import { useConnectionLogStore } from "@/stores/connectionLog";
+import { useSessionStore } from "@/stores/session";
 export default {
   name: "ConnectionCompleteView",
   components: { YAIHeader },
   methods: {
-    async waitForFriend() {
+    async updateDb() {
       let timeFinished = this.connectionLog.timeFinished;
       if (this.connectionLengthUpdated) {
         timeFinished =
@@ -17,25 +18,32 @@ export default {
       }
       this.connectionLog = await updateConnectionLogWithReflections(
         this.connectionLog,
-        this.rating,
-        this.notes,
         timeFinished
       );
+    },
+    async waitForFriend() {
+      await this.updateDb();
       router.push({
         path: "/waitingforfriend",
+      });
+    },
+    async selectPrompt() {
+      await this.updateDb();
+      this.session.nextPage = "/connectioncompleted";
+      router.push({
+        path: "/connectionselectprompt",
       });
     },
   },
   computed: {
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
+    ...mapWritableState(useSessionStore, ["session"]),
   },
   data() {
     const store = useConnectionLogStore();
     const connectionLengthMillis =
       store.connectionLog.timeFinished - store.connectionLog.timeContact;
     return {
-      notes: "",
-      rating: 0,
       updatingConnectionTime: false,
       connectionLengthUpdated: false,
       connectionLengthMinutes: Math.floor(connectionLengthMillis / (1000 * 60)),
@@ -51,29 +59,30 @@ export default {
 
 <template>
   <YAIHeader title="Connection Completed"></YAIHeader>
+  <ui-button raised @click="selectPrompt">Select Prompt</ui-button>
   <div>
     <ui-form-field>
-      <ui-radio v-model="rating" input-id="very-fun" value="5"></ui-radio>
+      <ui-radio v-model="connectionLog.rating" input-id="very-fun" value="5"></ui-radio>
       <label for="very-fun">very fun!</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="rating" input-id="fun" value="4"></ui-radio>
+      <ui-radio v-model="connectionLog.rating" input-id="fun" value="4"></ui-radio>
       <label for="fun">fun</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="rating" input-id="ok" value="3"></ui-radio>
+      <ui-radio v-model="connectionLog.rating" input-id="ok" value="3"></ui-radio>
       <label for="ok">ok</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="rating" input-id="not fun" value="2"></ui-radio>
+      <ui-radio v-model="connectionLog.rating" input-id="not fun" value="2"></ui-radio>
       <label for="very-fun">not fun</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="rating" input-id="ineffective" value="1"></ui-radio>
+      <ui-radio v-model="connectionLog.rating" input-id="ineffective" value="1"></ui-radio>
       <label for="ineffective">ineffective</label>
     </ui-form-field>
     <ui-textfield
-      v-model="notes"
+      v-model="connectionLog.notes"
       outlined
       input-type="textarea"
       rows="8"

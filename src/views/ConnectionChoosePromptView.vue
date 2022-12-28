@@ -1,11 +1,12 @@
 <script lang="ts">
-import {mapWritableState} from "pinia";
+import {mapWritableState, mapState} from "pinia";
 import { updateConnectionLogWithPrompt } from "@/components/ConnectionLog";
 import router from "../router";
 import { getPrompts, sortedPrompts } from "@/components/Prompts";
 import {useConnectionLogStore} from "@/stores/connectionLog";
 import YAIHeader from "@/components/YAIHeader.vue";
 import ConnectionComplete from "@/components/ConnectionCompleteButton.vue";
+import {useSessionStore} from "@/stores/session";
 
 export default {
   name: "ConnectionChoosePromptView",
@@ -20,6 +21,8 @@ export default {
   },
   computed: {
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
+    ...mapState(useSessionStore, ["session"]),
+
     orderedPrompts: function (): any {
       return sortedPrompts(this.prompts);
     },
@@ -33,7 +36,7 @@ export default {
       // update worker with prompt
       this.connectionLog = await updateConnectionLogWithPrompt(newConnectionLog);
       router.push({
-        path: "/connectionhappening",
+        path: this.session.nextPage,
       });
     },
   },
@@ -49,5 +52,5 @@ export default {
       {{ promptObj.prompt }}
     </ui-button>
   </div>
-  <ConnectionComplete/>
+  <ConnectionComplete v-if="this.session.nextPage === '/connectionhappening'"/>
 </template>
