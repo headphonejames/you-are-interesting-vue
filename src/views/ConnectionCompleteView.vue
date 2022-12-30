@@ -3,12 +3,20 @@ import YAIHeader from "@/components/YAIHeader.vue";
 import { updateConnectionLogWithReflections } from "@/components/ConnectionLog";
 import router from "@/router";
 import { mapWritableState } from "pinia";
-import { useConnectionLogStore } from "@/stores/connectionLog";
+import {
+  useConnectionLogStore,
+  emptyConnectionLog,
+} from "@/stores/connectionLog";
 import { useSessionStore } from "@/stores/session";
 export default {
   name: "ConnectionCompleteView",
   components: { YAIHeader },
   methods: {
+    calculateConnectTime(connectionLog: any) {
+      const connectionLengthMillis =
+        connectionLog.timeFinished - connectionLog.timeContact;
+      return Math.floor(connectionLengthMillis / (1000 * 60));
+    },
     async updateDb() {
       let timeFinished = this.connectionLog.timeFinished;
       if (this.connectionLengthUpdated) {
@@ -20,12 +28,36 @@ export default {
         this.connectionLog,
         timeFinished
       );
+      // update cache
+      this.session.connectionLogCache[this.session.connectionLogCacheIndex] = this.connectionLog;
+      // reset model data
+      this.connectionLengthUpdated = false;
     },
     async waitForFriend() {
+      this.session.connectionLogCache.push(this.connectionLog);
       await this.updateDb();
+      // stash log in session object incase we want to update it later
+      this.session.connectionLogCacheIndex  =
+        this.session.connectionLogCacheIndex + 1;
+      // reset the connectionLog obj
+      this.connectionLog = emptyConnectionLog();
       router.push({
         path: "/waitingforfriend",
       });
+    },
+    async earlierConnection() {
+      await this.updateDb();
+      // move the index back one
+      this.session.connectionLogCacheIndex =
+        this.session.connectionLogCacheIndex - 1;
+      this.resetModelData();
+    },
+    async forwardConnection() {
+      await this.updateDb();
+      // move the index forward one
+      this.session.connectionLogCacheIndex =
+        this.session.connectionLogCacheIndex + 1;
+      this.resetModelData();
     },
     async selectPrompt() {
       await this.updateDb();
@@ -34,6 +66,14 @@ export default {
         path: "/connectionselectprompt",
       });
     },
+    resetModelData() {
+      // update pinia store
+      this.connectionLog =
+          this.session.connectionLogCache[this.session.connectionLogCacheIndex];
+      // update connection time
+      this.connectionLengthMinutes = this.calculateConnectTime(this.connectionLog);
+      this.connectionLengthUpdated = false;
+    }
   },
   computed: {
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
@@ -41,16 +81,14 @@ export default {
   },
   data() {
     const store = useConnectionLogStore();
-    const connectionLengthMillis =
-      store.connectionLog.timeFinished - store.connectionLog.timeContact;
     return {
       updatingConnectionTime: false,
       connectionLengthUpdated: false,
-      connectionLengthMinutes: Math.floor(connectionLengthMillis / (1000 * 60)),
+      connectionLengthMinutes: this.calculateConnectTime(store.connectionLog),
     };
   },
   watch: {
-    connectionLengthMinutes(newValue: number) {
+    connectionLengthMinutes() {
       this.connectionLengthUpdated = true;
     },
   },
@@ -62,23 +100,43 @@ export default {
   <ui-button raised @click="selectPrompt">Select Prompt</ui-button>
   <div>
     <ui-form-field>
-      <ui-radio v-model="connectionLog.rating" input-id="very-fun" value="5"></ui-radio>
+      <ui-radio
+        v-model="connectionLog.rating"
+        input-id="very-fun"
+        value="5"
+      ></ui-radio>
       <label for="very-fun">very fun!</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="connectionLog.rating" input-id="fun" value="4"></ui-radio>
+      <ui-radio
+        v-model="connectionLog.rating"
+        input-id="fun"
+        value="4"
+      ></ui-radio>
       <label for="fun">fun</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="connectionLog.rating" input-id="ok" value="3"></ui-radio>
+      <ui-radio
+        v-model="connectionLog.rating"
+        input-id="ok"
+        value="3"
+      ></ui-radio>
       <label for="ok">ok</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="connectionLog.rating" input-id="not fun" value="2"></ui-radio>
+      <ui-radio
+        v-model="connectionLog.rating"
+        input-id="not fun"
+        value="2"
+      ></ui-radio>
       <label for="very-fun">not fun</label>
     </ui-form-field>
     <ui-form-field>
-      <ui-radio v-model="connectionLog.rating" input-id="ineffective" value="1"></ui-radio>
+      <ui-radio
+        v-model="connectionLog.rating"
+        input-id="ineffective"
+        value="1"
+      ></ui-radio>
       <label for="ineffective">ineffective</label>
     </ui-form-field>
     <ui-textfield
@@ -110,6 +168,21 @@ export default {
       max="30"
     ></ui-slider>
   </div>
+  <ui-button
+    v-if="this.session.connectionLogCacheIndex > 0"
+    outlined
+    @click="earlierConnection()"
+    >Go to previous connection</ui-button
+  ><br />
+  <ui-button
+    v-if="
+      this.session.connectionLogCacheIndex <
+      this.session.connectionLogCache.length - 1
+    "
+    outlined
+    @click="forwardConnection()"
+    >Go to forward connection</ui-button
+  ><br />
   <ui-button raised @click="waitForFriend()"
     >Go back out into the world</ui-button
   >

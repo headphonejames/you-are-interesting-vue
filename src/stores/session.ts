@@ -5,6 +5,8 @@ export const useSessionStore = defineStore("session", {
     return {
       session: {
         nextPage: "/connectionhappening",
+        connectionLogCache: [],
+        connectionLogCacheIndex: 0,
       },
     };
   },
