@@ -33,5 +33,6 @@ export default {
       title="Connection Begins"
   ></YAIHeader>
   <ui-button outlined @click="selectPrompt()">Select Prompt</ui-button><br/>
+  <br/>
   <ConnectionComplete/>
 </template>

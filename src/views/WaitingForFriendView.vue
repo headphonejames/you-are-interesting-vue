@@ -43,6 +43,8 @@ export default {
   <ui-button outlined @click="connectionBegin(worker)"
     >Contact initiated</ui-button
   >
+  <br/>
   <ui-button v-if="this.session.connectionLogCacheIndex > 0" outlined @click="previousConnection()">Previous connection</ui-button><br/>
+  <br/>
   <EndShiftButton/>
 </template>

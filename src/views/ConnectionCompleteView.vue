@@ -29,7 +29,8 @@ export default {
         timeFinished
       );
       // update cache
-      this.session.connectionLogCache[this.session.connectionLogCacheIndex] = this.connectionLog;
+      this.session.connectionLogCache[this.session.connectionLogCacheIndex] =
+        this.connectionLog;
       // reset model data
       this.connectionLengthUpdated = false;
     },
@@ -37,7 +38,7 @@ export default {
       this.session.connectionLogCache.push(this.connectionLog);
       await this.updateDb();
       // stash log in session object incase we want to update it later
-      this.session.connectionLogCacheIndex  =
+      this.session.connectionLogCacheIndex =
         this.session.connectionLogCacheIndex + 1;
       // reset the connectionLog obj
       this.connectionLog = emptyConnectionLog();
@@ -69,15 +70,22 @@ export default {
     resetModelData() {
       // update pinia store
       this.connectionLog =
-          this.session.connectionLogCache[this.session.connectionLogCacheIndex];
+        this.session.connectionLogCache[this.session.connectionLogCacheIndex];
       // update connection time
-      this.connectionLengthMinutes = this.calculateConnectTime(this.connectionLog);
+      this.connectionLengthMinutes = this.calculateConnectTime(
+        this.connectionLog
+      );
       this.connectionLengthUpdated = false;
-    }
+    },
   },
   computed: {
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
     ...mapWritableState(useSessionStore, ["session"]),
+    timeConnected: function (): string {
+      return new Date(
+        parseInt(this.connectionLog.timeContact)
+      ).toLocaleTimeString("en-US");
+    },
   },
   data() {
     const store = useConnectionLogStore();
@@ -97,6 +105,8 @@ export default {
 
 <template>
   <YAIHeader title="Connection Completed"></YAIHeader>
+  <h4>Time connected: {{ timeConnected }}</h4>
+  <br />
   <ui-button raised @click="selectPrompt">Select Prompt</ui-button>
   <div>
     <ui-form-field>
@@ -160,6 +170,7 @@ export default {
     @click="updatingConnectionTime = !updatingConnectionTime"
     >Hide connection time</ui-button
   >
+  <br />
   <div v-if="updatingConnectionTime">
     <h2>connection length: {{ this.connectionLengthMinutes }}</h2>
     <ui-slider
@@ -167,22 +178,23 @@ export default {
       min="0"
       max="30"
     ></ui-slider>
+    <br />
   </div>
-  <ui-button
-    v-if="this.session.connectionLogCacheIndex > 0"
-    outlined
-    @click="earlierConnection()"
-    >Go to previous connection</ui-button
-  ><br />
-  <ui-button
+  <div v-if="this.session.connectionLogCacheIndex > 0">
+    <ui-button outlined @click="earlierConnection()"
+      >Go to previous connection</ui-button
+    ><br />
+  </div>
+  <div
     v-if="
       this.session.connectionLogCacheIndex <
       this.session.connectionLogCache.length - 1
     "
-    outlined
-    @click="forwardConnection()"
-    >Go to forward connection</ui-button
-  ><br />
+  >
+    <ui-button outlined @click="forwardConnection()"
+      >Go to forward connection</ui-button
+    ><br />
+  </div>
   <ui-button raised @click="waitForFriend()"
     >Go back out into the world</ui-button
   >
