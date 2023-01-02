@@ -105,9 +105,12 @@ export default {
 
 <template>
   <YAIHeader title="Connection Completed"></YAIHeader>
-  <h4>Time connected: {{ timeConnected }}</h4>
-  <br />
-  <ui-button raised @click="selectPrompt">Select Prompt</ui-button>
+  <span class="line">
+    <h4>Time connected: {{ timeConnected }}</h4>
+  </span>
+  <span class="line">
+    <ui-button raised @click="selectPrompt">Select Prompt</ui-button>
+  </span>
   <div>
     <ui-form-field>
       <ui-radio
@@ -158,32 +161,34 @@ export default {
       >Notes</ui-textfield
     >
   </div>
-  <ui-button
-    v-if="!updatingConnectionTime"
-    raised
-    @click="updatingConnectionTime = !updatingConnectionTime"
-    >Update connection time</ui-button
-  >
-  <ui-button
-    v-else
-    raised
-    @click="updatingConnectionTime = !updatingConnectionTime"
-    >Hide connection time</ui-button
-  >
-  <br />
+  <span class="line">
+    <ui-button
+      v-if="!updatingConnectionTime"
+      raised
+      @click="updatingConnectionTime = !updatingConnectionTime"
+      >Update connection time</ui-button
+    >
+    <ui-button
+      v-else
+      raised
+      @click="updatingConnectionTime = !updatingConnectionTime"
+      >Hide connection time</ui-button
+    >
+  </span>
   <div v-if="updatingConnectionTime">
-    <h2>connection length: {{ this.connectionLengthMinutes }}</h2>
-    <ui-slider
-      v-model="this.connectionLengthMinutes"
-      min="0"
-      max="30"
-    ></ui-slider>
-    <br />
+      <h2>connection length: {{ this.connectionLengthMinutes }}</h2>
+      <ui-slider
+        v-model="this.connectionLengthMinutes"
+        min="0"
+        max="30"
+      ></ui-slider>
   </div>
   <div v-if="this.session.connectionLogCacheIndex > 0">
-    <ui-button outlined @click="earlierConnection()"
-      >Go to previous connection</ui-button
-    ><br />
+    <span class="line">
+      <ui-button outlined @click="earlierConnection()"
+        >Go to previous connection</ui-button
+      ></span
+    >
   </div>
   <div
     v-if="
@@ -191,11 +196,15 @@ export default {
       this.session.connectionLogCache.length - 1
     "
   >
-    <ui-button outlined @click="forwardConnection()"
-      >Go to forward connection</ui-button
-    ><br />
+    <span class="line">
+      <ui-button outlined @click="forwardConnection()"
+        >Go to forward connection</ui-button
+      >
+    </span>
   </div>
-  <ui-button raised @click="waitForFriend()"
-    >Go back out into the world</ui-button
-  >
+  <span class="line">
+    <ui-button raised @click="waitForFriend()"
+      >Go back out into the world</ui-button
+    >
+  </span>
 </template>

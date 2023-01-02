@@ -1,7 +1,5 @@
 <script lang="ts">
-import {
-  finishShiftForWorker
-} from "@/components/Timesheet";
+import { finishShiftForWorker } from "@/components/Timesheet";
 import router from "@/router";
 import { mapState, mapWritableState } from "pinia";
 import { useWorkerStore } from "@/stores/worker";
@@ -24,5 +22,7 @@ export default {
 </script>
 
 <template>
-  <ui-button raised @click="finishShift()">Finish Shift</ui-button><br />
+  <span class="line">
+    <ui-button raised @click="finishShift()">Finish Shift</ui-button><br />
+  </span>
 </template>

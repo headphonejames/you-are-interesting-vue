@@ -1,12 +1,12 @@
 <script lang="ts">
-import {mapWritableState, mapState} from "pinia";
+import { mapWritableState, mapState } from "pinia";
 import { updateConnectionLogWithPrompt } from "@/components/ConnectionLog";
 import router from "../router";
 import { getPrompts, sortedPrompts } from "@/components/Prompts";
-import {useConnectionLogStore} from "@/stores/connectionLog";
+import { useConnectionLogStore } from "@/stores/connectionLog";
 import YAIHeader from "@/components/YAIHeader.vue";
 import ConnectionComplete from "@/components/ConnectionCompleteButton.vue";
-import {useSessionStore} from "@/stores/session";
+import { useSessionStore } from "@/stores/session";
 
 export default {
   name: "ConnectionChoosePromptView",
@@ -34,7 +34,9 @@ export default {
         prompt: promptObj.prompt,
       };
       // update worker with prompt
-      this.connectionLog = await updateConnectionLogWithPrompt(newConnectionLog);
+      this.connectionLog = await updateConnectionLogWithPrompt(
+        newConnectionLog
+      );
       router.push({
         path: this.session.nextPage,
       });
@@ -44,13 +46,13 @@ export default {
 </script>
 
 <template>
-  <YAIHeader
-      title="Select a prompt"
-  ></YAIHeader>
+  <YAIHeader title="Select a prompt"></YAIHeader>
   <div v-for="promptObj in orderedPrompts" :key="promptObj.id">
-    <ui-button outlined @click="selectPrompt(promptObj)">
-      {{ promptObj.prompt }}
-    </ui-button>
+    <span class="line">
+      <ui-button outlined @click="selectPrompt(promptObj)">
+        {{ promptObj.prompt }}
+      </ui-button>
+    </span>
   </div>
-  <ConnectionComplete v-if="this.session.nextPage === '/connectionhappening'"/>
+  <ConnectionComplete v-if="this.session.nextPage === '/connectionhappening'" />
 </template>

@@ -37,9 +37,16 @@ export default {
     />
     <div class="wrapper">
       <nav>
+        <span class="line">
         <ui-button raised @click="workers">Workers List</ui-button>
-        <ui-button raised @click="prompts">Prompts List</ui-button>
+        </span>
+        <span class="line">
+
+          <ui-button raised @click="prompts">Prompts List</ui-button>
+        </span>
+        <span class="line">
         <ui-button raised @click="shiftstart">Start Shift</ui-button>
+        </span>
       </nav>
     </div>
   </header>
