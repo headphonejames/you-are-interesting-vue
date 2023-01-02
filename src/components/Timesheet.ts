@@ -19,33 +19,20 @@ export const startShiftForWorker = async (worker: any) => {
     query: mutations.createTimesheet,
     variables: { input: timesheetData },
   });
-  const newTimesheet = timesheetDBData.data.createTimesheet;
+  return timesheetDBData.data.createTimesheet;
+};
 
+export const updateWorkerTimesheet = async (worker: any, newTimesheet: any) => {
   const updatedWorkerData = {
     currentTimesheetId: newTimesheet.id,
     id: worker.id,
   };
-  const updatedWorkerDBData = await API.graphql({
+  const updatedWorkerDBData: any = await API.graphql({
     query: mutations.updateWorker,
     variables: { input: updatedWorkerData },
   });
-  return newTimesheet;
-};
-
-export const finishShiftForWorker = async (worker: any) => {
-  // get the timesheet
-  const timesheet = await getTimesheet(worker);
-  // update the timesheet
-  const updatedTimesheet = {
-    stopTime: Date.now(),
-    id: timesheet.id,
-  };
-  const newTimesheet: any = await API.graphql({
-    query: mutations.updateTimesheet,
-    variables: { input: updatedTimesheet },
-  });
-  return newTimesheet.data.updateTimesheet;
-};
+  return updatedWorkerDBData.data.updateWorker;
+}
 
 export const getTimesheet = async (worker: any) => {
   const timesheet: any = await API.graphql({
@@ -57,27 +44,29 @@ export const getTimesheet = async (worker: any) => {
   return timesheet.data.getTimesheet;
 };
 
-export const finalizeShiftForWorker = async (worker: any, notes: string) => {
+export const finishShiftForWorker = async (worker: any, notes: string) => {
   // get the timesheet
   const timesheet = await getTimesheet(worker);
   // update the timesheet
   const timesheetInput = {
-    notes: notes,
     id: timesheet.id,
+    notes: notes,
+    stopTime: Date.now(),
   };
   const newTimesheet: any = await API.graphql({
     query: mutations.updateTimesheet,
     variables: { input: timesheetInput },
   });
+  // reset the worker data
   const updatedWorkerData = {
     currentTimesheetId: "",
     id: worker.id,
   };
-  const updatedWorkerDBData = await API.graphql({
+  await API.graphql({
     query: mutations.updateWorker,
     variables: { input: updatedWorkerData },
   });
-  return  newTimesheet.data.updateTimesheet;
+  return newTimesheet.data.updateTimesheet;
 };
 
 export const removeTimesheets = async (timesheet: any) => {

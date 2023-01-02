@@ -8,6 +8,7 @@ import {
   emptyConnectionLog,
 } from "@/stores/connectionLog";
 import { useSessionStore } from "@/stores/session";
+
 export default {
   name: "ConnectionCompleteView",
   components: { YAIHeader },
@@ -65,6 +66,12 @@ export default {
       this.session.nextPage = "/connectioncompleted";
       router.push({
         path: "/connectionselectprompt",
+      });
+    },
+    async finishShift() {
+      await this.updateDb();
+      router.push({
+        path: "/shiftfinished",
       });
     },
     resetModelData() {
@@ -176,12 +183,12 @@ export default {
     >
   </span>
   <div v-if="updatingConnectionTime">
-      <h2>connection length: {{ this.connectionLengthMinutes }}</h2>
-      <ui-slider
-        v-model="this.connectionLengthMinutes"
-        min="0"
-        max="30"
-      ></ui-slider>
+    <h2>connection length: {{ this.connectionLengthMinutes }}</h2>
+    <ui-slider
+      v-model="this.connectionLengthMinutes"
+      min="0"
+      max="30"
+    ></ui-slider>
   </div>
   <div v-if="this.session.connectionLogCacheIndex > 0">
     <span class="line">
@@ -206,5 +213,8 @@ export default {
     <ui-button raised @click="waitForFriend()"
       >Go back out into the world</ui-button
     >
+  </span>
+  <span class="line">
+    <ui-button outlined @click="finishShift()">Finish shift</ui-button>
   </span>
 </template>

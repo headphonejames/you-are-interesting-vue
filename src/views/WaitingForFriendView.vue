@@ -5,18 +5,22 @@ import { createConnectionLogForWorker } from "@/components/ConnectionLog";
 import router from "../router";
 import { useConnectionLogStore } from "@/stores/connectionLog";
 import YAIHeader from "@/components/YAIHeader.vue";
-import EndShiftButton from "@/components/EndShiftButton.vue";
 import { useSessionStore } from "@/stores/session";
 
 export default {
   name: "WaitingForFriendView",
-  components: { EndShiftButton, YAIHeader },
+  components: { YAIHeader },
   computed: {
     ...mapState(useWorkerStore, ["worker"]),
     ...mapState(useSessionStore, ["session"]),
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
   },
   methods: {
+    finishShift() {
+      router.push({
+        path: "/shiftfinished",
+      });
+    },
     async connectionBegin(workerObj: any) {
       this.connectionLog = await createConnectionLogForWorker(this.worker);
       router.push({
@@ -50,5 +54,7 @@ export default {
       @click="previousConnection()"
       >Previous connection</ui-button>
   </span>
-  <EndShiftButton />
+  <span class="line">
+    <ui-button outlined @click="finishShift()">Finish Shift</ui-button><br />
+  </span>
 </template>

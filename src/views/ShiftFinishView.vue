@@ -1,11 +1,10 @@
 <script lang="ts">
 import router from "../router";
 import YAIHeader from "@/components/YAIHeader.vue";
-import {finalizeShiftForWorker, finishShiftForWorker} from "@/components/Timesheet"
+import {finishShiftForWorker} from "@/components/Timesheet"
 import { useTimesheetStore } from "@/stores/timesheet";
 import { useWorkerStore } from "@/stores/worker";
 import {mapState, mapWritableState} from "pinia";
-
 
 export default {
   name: "ShiftFinishView",
@@ -21,7 +20,7 @@ export default {
   },
   methods: {
     async finishShift() {
-      await finalizeShiftForWorker(this.worker, this.notes);
+      await finishShiftForWorker(this.worker, this.notes);
       router.push({ path: '/' })
     }
   },
@@ -39,5 +38,7 @@ export default {
         with-counter
     ></ui-textfield>
   </div>
+  <span class="line">
   <ui-button raised @click="finishShift()">All done!</ui-button>
+    </span>
 </template>

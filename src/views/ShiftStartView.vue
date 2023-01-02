@@ -4,7 +4,7 @@ import router from "../router";
 import { mapWritableState } from "pinia";
 import { useWorkerStore } from "@/stores/worker";
 import { useTimesheetStore } from "@/stores/timesheet";
-import { startShiftForWorker, getTimesheet } from "@/components/Timesheet";
+import { startShiftForWorker, updateWorkerTimesheet } from "@/components/Timesheet";
 export default {
   data() {
     return {
@@ -28,11 +28,11 @@ export default {
       if (workerObj.currentTimesheetId === "") {
         // create an entry for timesheet and cache in pinia store
         this.timesheet = await startShiftForWorker(workerObj);
+        this.worker = await updateWorkerTimesheet(workerObj, this.timesheet);
+      } else {
+        // cache the worker in state
+        this.worker = workerObj;
       }
-      //TODO check where in connection we are
-
-      // cache the worker in state
-      this.worker = workerObj;
       router.push({
         path: "/waitingforfriend",
       });
