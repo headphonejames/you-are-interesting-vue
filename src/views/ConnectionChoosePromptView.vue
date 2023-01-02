@@ -14,6 +14,7 @@ export default {
   data() {
     return {
       prompts: [],
+      promptStr: "",
     };
   },
   async created() {
@@ -28,18 +29,29 @@ export default {
     },
   },
   methods: {
+    async customPrompt() {
+      const newConnectionLog = {
+        ...this.connectionLog,
+        prompt: this.promptStr,
+      };
+      return await this.updateDb(newConnectionLog);
+    },
+    async updateDb(newConnectionLog: any) {
+      // update worker with prompt
+      this.connectionLog = await updateConnectionLogWithPrompt(
+          newConnectionLog
+      );
+      router.push({
+        path: this.session.nextPage,
+      });
+    },
     async selectPrompt(promptObj: any) {
       const newConnectionLog = {
         ...this.connectionLog,
         prompt: promptObj.prompt,
       };
-      // update worker with prompt
-      this.connectionLog = await updateConnectionLogWithPrompt(
-        newConnectionLog
-      );
-      router.push({
-        path: this.session.nextPage,
-      });
+      return await this.updateDb(newConnectionLog);
+
     },
   },
 };
@@ -54,5 +66,14 @@ export default {
       </ui-button>
     </span>
   </div>
+  <ui-textfield
+      v-model="promptStr"
+  >
+    Other prompt
+  </ui-textfield>
+  <span class="line">
+    <ui-button raised @click="customPrompt()">Custom prompt</ui-button>
+  </span>
+
   <ConnectionComplete v-if="this.session.nextPage === '/connectionhappening'" />
 </template>

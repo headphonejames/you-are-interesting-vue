@@ -55,6 +55,6 @@ export default {
       >Previous connection</ui-button>
   </span>
   <span class="line">
-    <ui-button outlined @click="finishShift()">Finish Shift</ui-button><br />
+    <ui-button outlined @click="finishShift()">Finish Shift</ui-button>
   </span>
 </template>
