@@ -1,14 +1,16 @@
 <script lang="ts">
 import YAIHeader from "@/components/YAIHeader.vue";
 import ConnectionComplete from "@/components/ConnectionCompleteButton.vue";
-import {mapState} from "pinia";
-import {useConnectionLogStore} from "@/stores/connectionLog";
+import {attachKeyboard, clearBindings} from "@/components/RemoteKeyboard";
 
 export default {
   name: "ConnectionHappeningView",
   components: { YAIHeader, ConnectionComplete },
-  computed: {
-    ...mapState(useConnectionLogStore, ["connectionLog"]),
+  created() {
+    attachKeyboard();
+  },
+  beforeUnmount() {
+    clearBindings();
   },
 };
 </script>

@@ -7,6 +7,11 @@ import { useConnectionLogStore } from "@/stores/connectionLog";
 import YAIHeader from "@/components/YAIHeader.vue";
 import ConnectionComplete from "@/components/ConnectionCompleteButton.vue";
 import { useSessionStore } from "@/stores/session";
+import {
+  setAction,
+  attachKeyboard,
+  clearBindings,
+} from "@/components/RemoteKeyboard";
 
 export default {
   name: "ConnectionChoosePromptView",
@@ -19,6 +24,22 @@ export default {
   },
   async created() {
     this.prompts = await getPrompts();
+    const createKeyBinding = (index: number) => {
+      if (this.prompts.length > index) {
+        setAction("Digit" + (index + 1), () => {
+          return this.selectPrompt(this.orderedPrompts[index]);
+        });
+      }
+    };
+    createKeyBinding(0);
+    createKeyBinding(1);
+    createKeyBinding(2);
+    createKeyBinding(3);
+    createKeyBinding(4);
+    attachKeyboard();
+  },
+  beforeUnmount() {
+    clearBindings();
   },
   computed: {
     ...mapWritableState(useConnectionLogStore, ["connectionLog"]),
@@ -39,7 +60,7 @@ export default {
     async updateDb(newConnectionLog: any) {
       // update worker with prompt
       this.connectionLog = await updateConnectionLogWithPrompt(
-          newConnectionLog
+        newConnectionLog
       );
       router.push({
         path: this.session.nextPage,
@@ -51,7 +72,6 @@ export default {
         prompt: promptObj.prompt,
       };
       return await this.updateDb(newConnectionLog);
-
     },
   },
 };
@@ -66,11 +86,7 @@ export default {
       </ui-button>
     </span>
   </div>
-  <ui-textfield
-      v-model="promptStr"
-  >
-    Other prompt
-  </ui-textfield>
+  <ui-textfield v-model="promptStr"> Other prompt </ui-textfield>
   <span class="line">
     <ui-button raised @click="customPrompt()">Custom prompt</ui-button>
   </span>

@@ -6,10 +6,26 @@ import router from "../router";
 import { useConnectionLogStore } from "@/stores/connectionLog";
 import YAIHeader from "@/components/YAIHeader.vue";
 import { useSessionStore } from "@/stores/session";
+import {
+  setAction,
+  attachKeyboard,
+  clearBindings,
+} from "@/components/RemoteKeyboard";
 
 export default {
   name: "WaitingForFriendView",
   components: { YAIHeader },
+  created() {
+    setAction("Digit1", this.connectionBegin);
+    if (this.session.connectionLogCacheIndex > 0) {
+      setAction("Digit2", this.previousConnection);
+    }
+    setAction("Digit6", this.finishShift);
+    attachKeyboard();
+  },
+  unmount() {
+    clearBindings();
+  },
   computed: {
     ...mapState(useWorkerStore, ["worker"]),
     ...mapState(useSessionStore, ["session"]),
@@ -21,7 +37,7 @@ export default {
         path: "/shiftfinished",
       });
     },
-    async connectionBegin(workerObj: any) {
+    async connectionBegin() {
       this.connectionLog = await createConnectionLogForWorker(this.worker);
       router.push({
         path: "/connectionbegin",
@@ -45,14 +61,12 @@ export default {
 <template>
   <YAIHeader title="Waiting for a friend"></YAIHeader>
   <span class="line">
-    <ui-button outlined @click="connectionBegin(worker)"
-      >Contact initiated</ui-button>
+    <ui-button outlined @click="connectionBegin()">Contact initiated</ui-button>
   </span>
   <span v-if="this.session.connectionLogCacheIndex > 0" class="line">
-    <ui-button
-      outlined
-      @click="previousConnection()"
-      >Previous connection</ui-button>
+    <ui-button outlined @click="previousConnection()"
+      >Previous connection</ui-button
+    >
   </span>
   <span class="line">
     <ui-button outlined @click="finishShift()">Finish Shift</ui-button>

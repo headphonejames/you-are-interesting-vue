@@ -1,16 +1,16 @@
 <script lang="ts">
 import router from "../router";
-import { setAction, created, removed } from "@/components/RemoteKeyboard";
+import { setAction, attachKeyboard, clearBindings } from "@/components/RemoteKeyboard";
 
 export default {
   created() {
     setAction("Digit1", this.workers);
     setAction("Digit2", this.prompts);
     setAction("Digit3", this.shiftstart);
-    created();
+    attachKeyboard();
   },
   beforeUnmount() {
-    removed();
+    clearBindings();
   },
   methods: {
     workers() {

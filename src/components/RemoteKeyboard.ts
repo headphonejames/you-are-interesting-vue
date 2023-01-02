@@ -1,15 +1,19 @@
-export const actions: {[key: string]: any} = {};
+export let actions: {[key: string]: any} = {};
 
 export const setAction = (name: string, action: any) => {
   actions[name] = action;
 };
 
-export const created = () => {
+export const attachKeyboard = () => {
   window.addEventListener("keydown", handleKeyDown);
 };
 
-export const removed = () => {
+export const removeKeyboard = () => {
   window.removeEventListener("keydown", handleKeyDown);
+};
+
+export const clearBindings = () => {
+  actions = {};
 };
 
 export const handleKeyDown = (event: KeyboardEvent) => {

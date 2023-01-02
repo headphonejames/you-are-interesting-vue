@@ -8,10 +8,37 @@ import {
   emptyConnectionLog,
 } from "@/stores/connectionLog";
 import { useSessionStore } from "@/stores/session";
+import {
+  setAction,
+  attachKeyboard,
+  removeKeyboard,
+} from "@/components/RemoteKeyboard";
 
 export default {
   name: "ConnectionCompleteView",
   components: { YAIHeader },
+  created() {
+    setAction("Digit1", () => {
+      this.connectionLog.rating = 5;
+    });
+    setAction("Digit2", () => {
+      this.connectionLog.rating = 4;
+    });
+    setAction("Digit3", () => {
+      this.connectionLog.rating = 3;
+    });
+    setAction("Digit4", () => {
+      this.connectionLog.rating = 2;
+    });
+    setAction("Digit5", () => {
+      this.connectionLog.rating = 1;
+    });
+    setAction("Digit6", this.waitForFriend);
+    attachKeyboard();
+  },
+  unmount() {
+    removeKeyboard();
+  },
   methods: {
     calculateConnectTime(connectionLog: any) {
       const connectionLengthMillis =
