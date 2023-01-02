@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     async beginShift(workerObj: any) {
-      if (workerObj.currentTimesheetId === "") {
+      if (workerObj.currentTimesheetId === "" || workerObj.currentTimesheetId === null) {
         // create an entry for timesheet and cache in pinia store
         this.timesheet = await startShiftForWorker(workerObj);
         this.worker = await updateWorkerTimesheet(workerObj, this.timesheet);
