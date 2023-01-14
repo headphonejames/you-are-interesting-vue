@@ -30,10 +30,6 @@ export const removePrompt = async (prompt: any) => {
 };
 
 export const sortedPrompts = (prompts: any) => {
-  // return [prompts].sort((a: any, b: any) =>
-  //   a.prompt > b.prompt ? 1 : -1
-  // );
-  //
   return prompts.sort((a: any, b: any) =>
     a.prompt > b.prompt ? 1 : -1
   );
